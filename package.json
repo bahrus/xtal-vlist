@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "virtualized-list": "2.2.0",
-    "trans-render": "0.0.113",
-    "xtal-element": "0.0.59"
+    "trans-render": "0.0.115",
+    "xtal-element": "0.0.61"
   },
   "devDependencies": {
     "xtal-test": "0.0.19"
