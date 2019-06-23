@@ -1,5 +1,6 @@
 import { XtallatX, lispToCamel } from 'xtal-element/xtal-latx.js';
 import { hydrate } from 'trans-render/hydrate.js';
+import VirtualizedList from 'virtualized-list/es/index.js';
 const height = 'height';
 const row_count = 'row-count';
 const initial_scroll_top = 'initial-scroll-top';
@@ -42,12 +43,35 @@ export class XtalVList extends XtallatX(hydrate(HTMLElement)) {
     }
     connectedCallback() {
         this.propUp(XtalVList.observedAttributes.map(s => lispToCamel(s)));
+        this.propUp(['rows']);
         this._c = true;
         this.onPropsChange();
     }
+    get rows() {
+        return this._rows;
+    }
+    set rows(nv) {
+        this._rows = nv;
+    }
     onPropsChange() {
-        if (!this._c || this._rowCount < 0)
+        if (!this._c || this._rowCount < 0 || !this._renderRow)
             return;
+        const virtualizedList = new VirtualizedList(this, {
+            height: this._height,
+            rowCount: this._rowCount,
+            renderRow: this._renderRow,
+            rowHeight: this._rowHeight,
+            initialIndex: this._initialIndex,
+            initialScrollTop: this._initialScrollTop,
+            overscanCount: this._overscanCount,
+            estimatedRowHeight: this._estimatedRowHeight
+        });
+    }
+    get renderRow() {
+        return this._renderRow;
+    }
+    set renderRow(nv) {
+        this._renderRow = nv;
     }
     get rowHeight() {
         return this._rowHeight;
