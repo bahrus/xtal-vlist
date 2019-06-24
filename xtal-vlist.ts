@@ -19,7 +19,7 @@ export class XtalVList extends XtallatX(hydrate(HTMLElement)){
             case total_rows:
             case item_height:
             case h:
-            case w;
+            case w:
                 (<any>this)['_' + lispToCamel(n)] = parseFloat(nv);
                 break;
             default:
