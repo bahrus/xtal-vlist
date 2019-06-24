@@ -10,7 +10,7 @@
   "dependencies": {
     "virtualized-list": "2.2.0",
     "trans-render": "0.0.115",
-    "xtal-element": "0.0.61"
+    "xtal-element": "0.0.62"
   },
   "devDependencies": {
     "xtal-test": "0.0.19"

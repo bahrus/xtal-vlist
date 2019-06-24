@@ -1,6 +1,8 @@
 import {XtallatX, lispToCamel} from 'xtal-element/xtal-latx.js';
 import {hydrate} from 'trans-render/hydrate.js';
-import VirtualizedList from 'virtualized-list/es/index.js';
+import {define} from 'trans-render/define.js';
+//import VirtualizedList from 'virtualized-list/es/index.js';
+//declare var VirtualizedList: any;
 const height = 'height';
 const row_count = 'row-count';
 const initial_scroll_top = 'initial-scroll-top';
@@ -11,7 +13,7 @@ const row_height = 'row-height';
 type rowIdxToNumber = (n: number) => number; 
 type rowHeightType = number | number[] | rowIdxToNumber;
 export class XtalVList extends XtallatX(hydrate(HTMLElement)){
-
+    static get is(){return 'xtal-vlist';}
     static get observedAttributes(){
         return super.observedAttributes.concat([height, row_count, initial_scroll_top, initial_index, initial_index, overscan_count, estimated_row_height])
     }
@@ -37,7 +39,7 @@ export class XtalVList extends XtallatX(hydrate(HTMLElement)){
     _c = false;
     connectedCallback(){
         this.propUp(XtalVList.observedAttributes.map(s => lispToCamel(s)));
-        this.propUp(['rows']);
+        this.propUp(['renderRow']);
         this._c = true;
         this.onPropsChange();
     }
@@ -52,7 +54,7 @@ export class XtalVList extends XtallatX(hydrate(HTMLElement)){
 
     onPropsChange(){
         if(!this._c || this._rowCount < 0 || !this._renderRow) return;
-        
+        const VirtualizedList = (<any>window).VirtualizedList.default;
         const virtualizedList = new VirtualizedList(this, {
             height: this._height, // The height of the container
             rowCount: this._rowCount,
@@ -134,3 +136,4 @@ export class XtalVList extends XtallatX(hydrate(HTMLElement)){
 
 
 }
+define(XtalVList);

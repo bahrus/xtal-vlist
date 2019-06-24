@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <script src="../node_modules/virtualized-list/umd/virtualized-list.js"></script>
+        <xtal-vlist id=vlist></xtal-vlist>
+        <script defer src="https://cdn.jsdelivr.net/npm/es-module-shims@0.2.7/dist/es-module-shims.js"></script>
+        <script type="importmap-shim">
+        {
+            "imports": {
+                "xtal-element/": "../node_modules/xtal-element/",
+                "trans-render/": "../node_modules/trans-render/"
+            }
+        }
+        </script>
+        <script  type="module-shim">
+            import '../xtal-vlist.js';
+        </script>
+        <script>
+            vlist.rowCount = 100000;
+            vlist.renderRow = i => {
+                const div = document.createElement('div');
+                div.textContent = 'hello ' + i;
+                return div;
+            }
+        </script>
+    </div>
+</body>
+</html>
