@@ -13,7 +13,8 @@
     "xtal-element": "0.0.62"
   },
   "devDependencies": {
-    "xtal-test": "0.0.19"
+    "xtal-test": "0.0.19",
+    "es-module-shims": "0.2.8"
   },
   "repository": {
     "type": "git",
