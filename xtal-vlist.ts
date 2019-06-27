@@ -1,13 +1,14 @@
 import {XtallatX, lispToCamel} from 'xtal-element/xtal-latx.js';
 import {hydrate} from 'trans-render/hydrate.js';
 import {define} from 'trans-render/define.js';
+//import {RenderContext} from 'trans-render/init.d.js';
 import {VirtualList} from './vlist.js';
 
 const item_height = 'item-height';
 const total_rows = 'total-rows';
 const h = 'h';
 const w = 'w';
-export class XtalVList extends XtallatX(hydrate(HTMLElement)){
+export abstract class XtalVList extends XtallatX(hydrate(HTMLElement)){
     static get is(){return 'xtal-vlist';}
 
     static get observedAttributes(){
@@ -37,17 +38,21 @@ export class XtalVList extends XtallatX(hydrate(HTMLElement)){
         this.onPropsChange();
     }
 
-    _generatorFn: (row: number) => HTMLElement = row =>{
-        const el = document.createElement("div");
-        el.innerHTML = "<p>ITEM " + row + "</p>";
+    // _generatorFn: (row: number) => HTMLElement = row =>{
+    //     const el = document.createElement("div");
+    //     el.innerHTML = "<p>ITEM " + row + "</p>";
+    //     return el;
+    // }
+    // get generatorFn(){
+    //     return this._generatorFn;
+    // }
+    // set generatorFn(nv){
+    //     this._generatorFn = nv;
+    //     this.onPropsChange();
+    // }
+    abstract generate(row: number) : HTMLElement;
+    transform(row: number, el: HTMLElement){
         return el;
-    }
-    get generatorFn(){
-        return this._generatorFn;
-    }
-    set generatorFn(nv){
-        this._generatorFn = nv;
-        this.onPropsChange();
     }
 
     _itemHeight: number = 30;
@@ -74,12 +79,12 @@ export class XtalVList extends XtallatX(hydrate(HTMLElement)){
     }
 
     onPropsChange(){
-        if(!this._c || !this._generatorFn || this._totalRows < 0) return;
+        if(!this._c || this._totalRows < 0) return;
         var list = new VirtualList({
             h: this._h,
             itemHeight: this._itemHeight,
             totalRows: this._totalRows,
-            generatorFn: this._generatorFn,
+            generatorFn: (row: number) => this.transform(row, this.generate(row)),
           });
           list.container.classList.add("container");
           this.innerHTML = '';
