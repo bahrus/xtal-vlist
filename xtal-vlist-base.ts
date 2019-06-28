@@ -1,6 +1,6 @@
 import {XtallatX, lispToCamel} from 'xtal-element/xtal-latx.js';
 import {hydrate} from 'trans-render/hydrate.js';
-import {define} from 'trans-render/define.js';
+//import {define} from 'trans-render/define.js';
 //import {RenderContext} from 'trans-render/init.d.js';
 import {VirtualList} from './vlist.js';
 
@@ -8,8 +8,8 @@ const item_height = 'item-height';
 const total_rows = 'total-rows';
 const h = 'h';
 const w = 'w';
-export abstract class XtalVList extends XtallatX(hydrate(HTMLElement)){
-    static get is(){return 'xtal-vlist';}
+export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
+    //static get is(){return 'xtal-vlist';}
 
     static get observedAttributes(){
         return super.observedAttributes.concat([item_height, total_rows, h, w]);
@@ -32,8 +32,8 @@ export abstract class XtalVList extends XtallatX(hydrate(HTMLElement)){
     _c = false;
     connectedCallback(){
         this.style.display = 'block';
-        this.propUp(XtalVList.observedAttributes.map(s => lispToCamel(s)));
-        this.propUp(['generatorFn']);
+        this.propUp(XtalVListBase.observedAttributes.map(s => lispToCamel(s)));
+        //this.propUp(['generatorFn']);
         this._c = true;
         this.onPropsChange();
     }
@@ -95,4 +95,4 @@ export abstract class XtalVList extends XtallatX(hydrate(HTMLElement)){
 
 
 }
-define(XtalVList);
+//define(XtalVList);
