@@ -28,7 +28,9 @@ class XtalVListCustomized extends XtalVListBase{
         init(testTemplate, ctx, el);
         return el;
     }
-
+    rowXFormFn(el: HTMLElement){
+        //el.style.backgroundColor = 'red';
+    }
 
 }
 

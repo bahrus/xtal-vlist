@@ -79,6 +79,7 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
             this.attr(top_index, nv.toString());
         }
     }
+    rowXFormFn(el) { }
     onVListScroll(pos) {
         this._lastScrollPos = pos;
     }
@@ -87,12 +88,14 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
             return;
         if (!this._list) {
             const b = this.onVListScroll.bind(this);
+            const c = this.rowXFormFn.bind(this);
             this._list = new VirtualList({
                 h: this._h,
                 itemHeight: this._itemHeight,
                 totalRows: this._totalRows,
                 scrollCallback: b,
                 generatorFn: (row) => this.transform(row, this.generate(row)),
+                rowXFormFn: c,
             });
             this._list.container.classList.add("container");
             this.innerHTML = '';

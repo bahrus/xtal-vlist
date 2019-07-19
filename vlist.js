@@ -38,6 +38,8 @@ export function VirtualList(config) {
   this.generatorFn = config.generatorFn;
   this.totalRows = config.totalRows || (config.items && config.items.length);
 
+  this.rowXFormFn = config.rowXFormFn;
+
   var scroller = VirtualList.createScroller(itemHeight * this.totalRows);
   this.scrollCallback = config.scrollCallback;
   this.container = VirtualList.createContainer(width, height);
@@ -108,6 +110,9 @@ VirtualList.prototype.createRow = function(i) {
   item.classList.add('vrow');
   item.style.position = 'absolute';
   item.style.top = (i * this.itemHeight) + 'px';
+  if(this.rowXFormFn){
+    this.rowXFormFn(item);
+  }
   return item;
 };
 
