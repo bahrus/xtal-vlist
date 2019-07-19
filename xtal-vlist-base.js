@@ -35,7 +35,7 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
     connectedCallback() {
         this.style.display = 'block';
         this.propUp(XtalVListBase.observedAttributes.map(s => lispToCamel(s)));
-        //this.propUp(['generatorFn']);
+        this.propUp(['items']);
         this._c = true;
         this.onPropsChange();
     }
@@ -61,6 +61,16 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
         delete this._list;
         this.attr(total_rows, nv.toString());
     }
+    get items() {
+        return this._items;
+    }
+    set items(nv) {
+        this._items = nv;
+        this.totalRows = nv.length;
+        if (this._lastScrollPos !== undefined) {
+            this._list.scrollToPosition(this._lastScrollPos);
+        }
+    }
     get topIndex() {
         return this._topIndex;
     }
@@ -68,9 +78,6 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
         if (nv !== undefined) {
             this.attr(top_index, nv.toString());
         }
-    }
-    set restoreLastScrollTop(val) {
-        this._list.restoreLastScrollTop();
     }
     onVListScroll(pos) {
         this._lastScrollPos = pos;
