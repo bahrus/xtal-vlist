@@ -92,6 +92,8 @@ export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
 
     rowXFormFn(el: HTMLElement){}
 
+    containerXFormFn(el: HTMLElement){}
+
     _list: any;
     _lastScrollPos : number | undefined;
     onVListScroll(pos: number){
@@ -102,6 +104,7 @@ export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
         if(!this._list){
             const b = this.onVListScroll.bind(this);
             const c = this.rowXFormFn.bind(this);
+            const d = this.containerXFormFn.bind(this);
             this._list = new VirtualList({
                 h: this._h,
                 itemHeight: this._itemHeight,
@@ -109,6 +112,7 @@ export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
                 scrollCallback: b,
                 generatorFn: (row: number) => this.transform(row, this.generate(row)),
                 rowXFormFn: c,
+                containerXFormFn: d,
             });
             this._list.container.classList.add("container");
             this.innerHTML = '';

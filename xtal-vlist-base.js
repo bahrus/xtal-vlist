@@ -80,6 +80,7 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
         }
     }
     rowXFormFn(el) { }
+    containerXFormFn(el) { }
     onVListScroll(pos) {
         this._lastScrollPos = pos;
     }
@@ -89,6 +90,7 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
         if (!this._list) {
             const b = this.onVListScroll.bind(this);
             const c = this.rowXFormFn.bind(this);
+            const d = this.containerXFormFn.bind(this);
             this._list = new VirtualList({
                 h: this._h,
                 itemHeight: this._itemHeight,
@@ -96,6 +98,7 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
                 scrollCallback: b,
                 generatorFn: (row) => this.transform(row, this.generate(row)),
                 rowXFormFn: c,
+                containerXFormFn: d,
             });
             this._list.container.classList.add("container");
             this.innerHTML = '';

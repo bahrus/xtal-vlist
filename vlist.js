@@ -39,10 +39,11 @@ export function VirtualList(config) {
   this.totalRows = config.totalRows || (config.items && config.items.length);
 
   this.rowXFormFn = config.rowXFormFn;
+  //this.containerXFormFn = config.containerXFormFn;
 
   var scroller = VirtualList.createScroller(itemHeight * this.totalRows);
   this.scrollCallback = config.scrollCallback;
-  this.container = VirtualList.createContainer(width, height);
+  this.container = VirtualList.createContainer(width, height, config.containerXFormFn);
   this.container.appendChild(scroller);
 
   var screenItemsLen = Math.ceil(config.h / itemHeight);
@@ -146,7 +147,7 @@ VirtualList.prototype._renderChunk = function(node, from) {
   node.appendChild(fragment);
 };
 
-VirtualList.createContainer = function(w, h) {
+VirtualList.createContainer = function(w, h, t) {
   var c = document.createElement('div');
   c.style.width = w;
   c.style.height = h;
@@ -154,6 +155,7 @@ VirtualList.createContainer = function(w, h) {
   c.style.position = 'relative';
   c.style.padding = 0;
   c.style.border = '1px solid black';
+  if(t) t(c);
   return c;
 };
 

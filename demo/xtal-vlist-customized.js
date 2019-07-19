@@ -28,5 +28,8 @@ class XtalVListCustomized extends XtalVListBase {
     rowXFormFn(el) {
         //el.style.backgroundColor = 'red';
     }
+    containerXFormFn(el) {
+        el.style.backgroundColor = 'red';
+    }
 }
 define(XtalVListCustomized);
