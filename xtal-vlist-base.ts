@@ -8,11 +8,12 @@ const item_height = 'item-height';
 const total_rows = 'total-rows';
 const h = 'h';
 const w = 'w';
+const top_index = 'top-index';
 export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
     //static get is(){return 'xtal-vlist';}
 
     static get observedAttributes(){
-        return super.observedAttributes.concat([item_height, total_rows, h, w]);
+        return super.observedAttributes.concat([item_height, total_rows, h, w, top_index]);
     }
 
     attributeChangedCallback(n: string, ov: string, nv: string){
@@ -21,6 +22,7 @@ export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
             case item_height:
             case h:
             case w:
+            case top_index:
                 (<any>this)['_' + lispToCamel(n)] = parseFloat(nv);
                 break;
             default:
@@ -38,18 +40,7 @@ export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
         this.onPropsChange();
     }
 
-    // _generatorFn: (row: number) => HTMLElement = row =>{
-    //     const el = document.createElement("div");
-    //     el.innerHTML = "<p>ITEM " + row + "</p>";
-    //     return el;
-    // }
-    // get generatorFn(){
-    //     return this._generatorFn;
-    // }
-    // set generatorFn(nv){
-    //     this._generatorFn = nv;
-    //     this.onPropsChange();
-    // }
+
     abstract generate(row: number) : HTMLElement;
     transform(row: number, el: HTMLElement){
         return el;
@@ -78,18 +69,32 @@ export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
         this.attr(total_rows, nv.toString());
     }
 
+    _topIndex: number | undefined = undefined;
+    get topIndex(){
+        return this._topIndex;
+    }
+    set topIndex(nv){
+        if(nv !== undefined){
+            this.attr(top_index, nv.toString());
+        }
+    }
+    _list: any;
     onPropsChange(){
         if(!this._c || this._totalRows < 0) return;
-        var list = new VirtualList({
-            h: this._h,
-            itemHeight: this._itemHeight,
-            totalRows: this._totalRows,
-            generatorFn: (row: number) => this.transform(row, this.generate(row)),
-          });
-          list.container.classList.add("container");
-          this.innerHTML = '';
-          this.appendChild(list.container)
+        if(!this._list){
+            this._list = new VirtualList({
+                h: this._h,
+                itemHeight: this._itemHeight,
+                totalRows: this._totalRows,
+                generatorFn: (row: number) => this.transform(row, this.generate(row)),
+            });
+            this._list.container.classList.add("container");
+            this.innerHTML = '';
+            this.appendChild(this._list.container);
+        }
+
     }
+
 
 
 

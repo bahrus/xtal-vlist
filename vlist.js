@@ -78,6 +78,10 @@ export function VirtualList(config) {
   this.container.addEventListener('scroll', onScroll);
 }
 
+VirtualList.prototype.scrollToIndex = function(idx){
+  this.container.scrollTop = idx * this.itemHeight;
+}
+
 VirtualList.prototype.createRow = function(i) {
   var item;
   if (this.generatorFn)

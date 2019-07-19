@@ -7,6 +7,7 @@ const item_height = 'item-height';
 const total_rows = 'total-rows';
 const h = 'h';
 const w = 'w';
+const top_index = 'top-index';
 export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
     constructor() {
         //static get is(){return 'xtal-vlist';}
@@ -15,9 +16,10 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
         this._itemHeight = 30;
         this._h = 600;
         this._totalRows = -1;
+        this._topIndex = undefined;
     }
     static get observedAttributes() {
-        return super.observedAttributes.concat([item_height, total_rows, h, w]);
+        return super.observedAttributes.concat([item_height, total_rows, h, w, top_index]);
     }
     attributeChangedCallback(n, ov, nv) {
         switch (n) {
@@ -25,6 +27,7 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
             case item_height:
             case h:
             case w:
+            case top_index:
                 this['_' + lispToCamel(n)] = parseFloat(nv);
                 break;
             default:
@@ -60,18 +63,28 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
     set totalRows(nv) {
         this.attr(total_rows, nv.toString());
     }
+    get topIndex() {
+        return this._topIndex;
+    }
+    set topIndex(nv) {
+        if (nv !== undefined) {
+            this.attr(top_index, nv.toString());
+        }
+    }
     onPropsChange() {
         if (!this._c || this._totalRows < 0)
             return;
-        var list = new VirtualList({
-            h: this._h,
-            itemHeight: this._itemHeight,
-            totalRows: this._totalRows,
-            generatorFn: (row) => this.transform(row, this.generate(row)),
-        });
-        list.container.classList.add("container");
-        this.innerHTML = '';
-        this.appendChild(list.container);
+        if (!this._list) {
+            this._list = new VirtualList({
+                h: this._h,
+                itemHeight: this._itemHeight,
+                totalRows: this._totalRows,
+                generatorFn: (row) => this.transform(row, this.generate(row)),
+            });
+            this._list.container.classList.add("container");
+            this.innerHTML = '';
+            this.appendChild(this._list.container);
+        }
     }
 }
 //define(XtalVList);
