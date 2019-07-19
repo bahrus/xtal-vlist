@@ -1,7 +1,5 @@
 import { XtallatX, lispToCamel } from 'xtal-element/xtal-latx.js';
 import { hydrate } from 'trans-render/hydrate.js';
-//import {define} from 'trans-render/define.js';
-//import {RenderContext} from 'trans-render/init.d.js';
 import { VirtualList } from './vlist.js';
 const item_height = 'item-height';
 const total_rows = 'total-rows';
@@ -10,7 +8,6 @@ const w = 'w';
 const top_index = 'top-index';
 export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
     constructor() {
-        //static get is(){return 'xtal-vlist';}
         super(...arguments);
         this._c = false;
         this._itemHeight = 30;
@@ -85,6 +82,8 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
             this.innerHTML = '';
             this.appendChild(this._list.container);
         }
+        if (this._topIndex !== undefined) {
+            this._list.scrollToIndex(this._topIndex);
+        }
     }
 }
-//define(XtalVList);
