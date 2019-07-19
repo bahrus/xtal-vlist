@@ -68,6 +68,9 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
             this.attr(top_index, nv.toString());
         }
     }
+    set restoreLastScrollTop(val) {
+        this._list.restoreLastScrollTop();
+    }
     onPropsChange() {
         if (!this._c || this._totalRows < 0)
             return;

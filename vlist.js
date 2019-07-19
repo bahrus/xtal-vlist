@@ -51,6 +51,7 @@ export function VirtualList(config) {
   var lastRepaintY;
   var maxBuffer = screenItemsLen * itemHeight;
   var lastScrolled = 0;
+  var lastScrollTop = 0;
 
   // As soon as scrolling has stopped, this interval asynchronouslyremoves all
   // the nodes that are not used anymore
@@ -65,9 +66,11 @@ export function VirtualList(config) {
 
   function onScroll(e) {
     var scrollTop = e.target.scrollTop; // Triggers reflow
+    self.lastScrollTop = scrollTop;
     if (!lastRepaintY || Math.abs(scrollTop - lastRepaintY) > maxBuffer) {
       var first = parseInt(scrollTop / itemHeight) - screenItemsLen;
-      self._renderChunk(self.container, first < 0 ? 0 : first);
+      self.lastFirstVisibleIndex = first < 0 ? 0 : first
+      self._renderChunk(self.container, self.lastFirstVisibleIndex);
       lastRepaintY = scrollTop;
     }
 
@@ -80,6 +83,10 @@ export function VirtualList(config) {
 
 VirtualList.prototype.scrollToIndex = function(idx){
   this.container.scrollTop = idx * this.itemHeight;
+}
+
+VirtualList.prototype.restoreLastScrollTop = function(idx){
+  this.container.scrollTop = this.lastScrollTop;
 }
 
 VirtualList.prototype.createRow = function(i) {
