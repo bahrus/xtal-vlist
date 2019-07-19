@@ -102,6 +102,9 @@ VirtualList.prototype.createRow = function(i) {
       var itemText = document.createTextNode(this.items[i]);
       item = document.createElement('div');
       item.style.height = this.itemHeight + 'px';
+      if(this.rowXFormFn){
+        this.rowXFormFn(item);
+      }
       item.appendChild(itemText);
     } else {
       item = this.items[i];
@@ -111,9 +114,7 @@ VirtualList.prototype.createRow = function(i) {
   item.classList.add('vrow');
   item.style.position = 'absolute';
   item.style.top = (i * this.itemHeight) + 'px';
-  if(this.rowXFormFn){
-    this.rowXFormFn(item);
-  }
+
   return item;
 };
 
