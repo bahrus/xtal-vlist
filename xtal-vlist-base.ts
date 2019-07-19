@@ -63,6 +63,7 @@ export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
         return this._totalRows;
     }
     set totalRows(nv){
+        delete this._list;
         this.attr(total_rows, nv.toString());
     }
 
