@@ -63,7 +63,9 @@ export function VirtualList(config) {
     if (Date.now() - lastScrolled > 100) {
       var badNodes = document.querySelectorAll('[data-rm="1"]');
       for (var i = 0, l = badNodes.length; i < l; i++) {
-        self.container.removeChild(badNodes[i]);
+        try{
+          self.container.removeChild(badNodes[i]);
+        }catch(e){}    
       }
     }
   }, 300);
