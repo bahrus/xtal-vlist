@@ -6,7 +6,7 @@ const total_rows = 'total-rows';
 const h = 'h';
 const w = 'w';
 const top_index = 'top-index';
-const focus_id = 'focus-id';
+export const focus_id = 'focus-id';
 export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
     constructor() {
         super(...arguments);
