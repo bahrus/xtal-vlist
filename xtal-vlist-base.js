@@ -6,6 +6,7 @@ const total_rows = 'total-rows';
 const h = 'h';
 const w = 'w';
 const top_index = 'top-index';
+const focus_id = 'focus-id';
 export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
     constructor() {
         super(...arguments);
@@ -106,6 +107,11 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
         }
         if (this._topIndex !== undefined) {
             this._list.scrollToIndex(this._topIndex);
+        }
+        if (this._lastFocusID !== undefined) {
+            const focus = this._list.container.querySelector(`[${focus_id}="${this._lastFocusID}"]`);
+            if (focus)
+                focus.focus();
         }
     }
 }

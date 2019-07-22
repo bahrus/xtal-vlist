@@ -7,6 +7,7 @@ const total_rows = 'total-rows';
 const h = 'h';
 const w = 'w';
 const top_index = 'top-index';
+const focus_id = 'focus-id';
 export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
 
     static get observedAttributes(){
@@ -94,6 +95,8 @@ export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
 
     containerXFormFn(el: HTMLElement){}
 
+    _lastFocusID: string | undefined;
+
     _list: any;
     _lastScrollPos : number | undefined;
     onVListScroll(pos: number){
@@ -120,6 +123,10 @@ export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
         }
         if(this._topIndex !== undefined){
             this._list.scrollToIndex(this._topIndex);
+        }
+        if(this._lastFocusID !== undefined){
+            const focus = this._list.container.querySelector(`[${focus_id}="${this._lastFocusID}"]`);
+            if(focus) focus.focus();
         }
     }
 
