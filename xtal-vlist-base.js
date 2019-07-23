@@ -116,7 +116,7 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
                     event = new Event('focus', { bubbles: true, cancelable: true });
                     focus.dispatchEvent(event);
                 }
-            }, 50);
+            }, 1000);
         }
     }
 }
