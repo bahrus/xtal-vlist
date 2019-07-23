@@ -114,7 +114,7 @@ export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
                 }else{
                     this.setFocus(count + 1);
                 }
-            }, 50);
+            }, 500);
 
         }
     }
