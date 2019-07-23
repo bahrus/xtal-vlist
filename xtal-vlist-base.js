@@ -85,23 +85,6 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
     onVListScroll(pos) {
         this._lastScrollPos = pos;
     }
-    setFocus(count) {
-        if (count > 20)
-            return;
-        if (this._lastFocusID !== undefined) {
-            setTimeout(() => {
-                const focus = this._list.container.querySelector(`[${focus_id}="${this._lastFocusID}"]`);
-                if (focus) {
-                    focus.focus();
-                    event = new Event('focus', { bubbles: true, cancelable: true });
-                    focus.dispatchEvent(event);
-                }
-                else {
-                    this.setFocus(count + 1);
-                }
-            }, 500);
-        }
-    }
     onPropsChange() {
         if (!this._c || this._totalRows < 0)
             return;
@@ -125,6 +108,15 @@ export class XtalVListBase extends XtallatX(hydrate(HTMLElement)) {
         if (this._topIndex !== undefined) {
             this._list.scrollToIndex(this._topIndex);
         }
-        this.setFocus(0);
+        if (this._lastFocusID !== undefined) {
+            setTimeout(() => {
+                const focus = this._list.container.querySelector(`[${focus_id}="${this._lastFocusID}"]`);
+                if (focus) {
+                    focus.focus();
+                    event = new Event('focus', { bubbles: true, cancelable: true });
+                    focus.dispatchEvent(event);
+                }
+            }, 500);
+        }
     }
 }
