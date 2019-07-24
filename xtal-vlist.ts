@@ -8,7 +8,7 @@ const h = 'h';
 const w = 'w';
 const top_index = 'top-index';
 export const focus_id = 'focus-id';
-export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
+export abstract class XtalVList extends XtallatX(hydrate(HTMLElement)){
 
     static get observedAttributes(){
         return super.observedAttributes.concat([item_height, total_rows, h, w, top_index]);
@@ -32,7 +32,7 @@ export abstract class XtalVListBase extends XtallatX(hydrate(HTMLElement)){
     _c = false;
     connectedCallback(){
         this.style.display = 'block';
-        this.propUp(XtalVListBase.observedAttributes.map(s => lispToCamel(s)));
+        this.propUp(XtalVList.observedAttributes.map(s => lispToCamel(s)));
         this.propUp(['items']);
         this._c = true;
         this.onPropsChange();

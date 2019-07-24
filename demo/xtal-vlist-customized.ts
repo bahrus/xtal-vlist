@@ -1,4 +1,4 @@
-import {XtalVListBase} from '../xtal-vlist-base.js';
+import {XtalVList} from '../xtal-vlist.js';
 import {define} from 'trans-render/define.js';
 import {init} from 'trans-render/init.js';
 import {RenderContext} from 'trans-render/init.d.js';
@@ -10,7 +10,7 @@ const testTemplate = createTemplate(/* html */`
 </div>
 `);
 
-class XtalVListCustomized extends XtalVListBase{
+class XtalVListCustomized extends XtalVList{
     static get is(){
         return 'xtal-vlist-customized';
     }
@@ -28,12 +28,7 @@ class XtalVListCustomized extends XtalVListBase{
         init(testTemplate, ctx, el);
         return el;
     }
-    rowXFormFn(el: HTMLElement){
-        //el.style.backgroundColor = 'red';
-    }
-    containerXFormFn(el: HTMLElement){
-        el.style.backgroundColor = 'red';
-    }
+
 
 }
 
