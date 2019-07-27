@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "tags": [
+        {
+            "name": "xtal-vlist-",
+            "description": "Provides an unregistered base class web component wrapper around this [light-weight virtual list library](https://sergimansilla.com/blog/virtual-scrolling/)",
+            "attributes": [
+                {
+                    "name": "item-height",
+                    "description": "How high each item should be.  Default is 30."
+                },
+                {
+                    "name": "h",
+                    "description": "Height of component.  Default is 600."
+                },
+                {
+                    "name": "w",
+                    "description": "Width of component"
+                },
+                {
+                    "name": "total-rows",
+                    "description": "Total number of rows."
+                }
+            ]
+        }
+    ]
+}

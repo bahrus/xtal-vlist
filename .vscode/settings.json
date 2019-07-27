@@ -4,10 +4,15 @@
         "**/*.js": {"when": "$(basename).ts"},
         "**/*.js.map" : true
     },
-    "switcher.findSuffixOrder": [
-        ".js",
-        ".ts",
-        ".html",
-        ".scss"
-    ]
+    "json.schemas": [
+        {
+            "fileMatch": ["/html.json"],
+            "url": "https://unpkg.com/wc-info@0.0.62/schema.json"
+        },
+        {
+            "fileMatch": ["/css.json"],
+            "url": "https://raw.githubusercontent.com/Microsoft/vscode-css-languageservice/master/docs/customData.schema.json"
+        }
+    ],
+    "html.experimental.customData": ["./html.json"]
 }

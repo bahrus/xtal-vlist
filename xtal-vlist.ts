@@ -46,6 +46,9 @@ export abstract class XtalVList extends XtallatX(hydrate(HTMLElement)){
     }
 
     _itemHeight: number = 30;
+    /**
+     * How high each item should be
+     */
     get itemHeight(){
         return this._itemHeight;
     }
@@ -54,11 +57,25 @@ export abstract class XtalVList extends XtallatX(hydrate(HTMLElement)){
     }
 
     _h: number = 600;
+    /**
+     * Height of component.  Default is 600
+     */
     get h(){
         return this._h
     }
     set h(nv){
         this.attr(h, nv.toString());
+    }
+
+    _w: number | undefined;
+    /**
+     * Width of component
+     */
+    get w(){
+        return this._w;
+    }
+    set w(nv){
+        this.attr(w, nv.toString());
     }
     _totalRows: number = -1;
     get totalRows(){
