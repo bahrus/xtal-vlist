@@ -43,17 +43,32 @@ export class XtalVList extends XtallatX(hydrate(HTMLElement)) {
     transform(row, el) {
         return el;
     }
+    /**
+     * How high each item should be
+     */
     get itemHeight() {
         return this._itemHeight;
     }
     set itemHeight(nv) {
         this.attr(item_height, nv.toString());
     }
+    /**
+     * Height of component.  Default is 600
+     */
     get h() {
         return this._h;
     }
     set h(nv) {
         this.attr(h, nv.toString());
+    }
+    /**
+     * Width of component
+     */
+    get w() {
+        return this._w;
+    }
+    set w(nv) {
+        this.attr(w, nv.toString());
     }
     get totalRows() {
         return this._totalRows;

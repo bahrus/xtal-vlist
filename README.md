@@ -10,7 +10,7 @@ There are other web component virtual list libraries:
 
 [iron-list](https://www.webcomponents.org/element/@polymer/iron-list), to my knowledge, was the first web based component (in any "framework") to provide virtual list capabilities not specifically aimed at grids. 
 
-[https://ionicframework.com/docs/api/virtual-scroll](ionic-list) also looks really promising (but appears to be coupled with Angular for now, and I didn't see how to use with vanilla js).
+[ionic-list](https://ionicframework.com/docs/api/virtual-scroll) also looks really promising (but appears to be coupled with Angular for now, and I didn't see how to use with vanilla js).
 
 In the meantime, this component can serve a limited purpose -- a light-weight virtual list with no variation in height of each item.
 
