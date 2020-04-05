@@ -9,12 +9,12 @@
   },
   "dependencies": {
     "virtualized-list": "2.2.0",
-    "trans-render": "0.0.117",
-    "xtal-element": "0.0.63"
+    "trans-render": "0.0.143",
+    "xtal-element": "0.0.101"
   },
   "devDependencies": {
-    "xtal-test": "0.0.19",
-    "es-module-shims": "0.2.8"
+    "xtal-test": "0.0.44",
+    "es-module-shims": "0.4.6"
   },
   "repository": {
     "type": "git",
