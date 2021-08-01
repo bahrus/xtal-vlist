@@ -5,18 +5,15 @@
   "module": "xtal-vlist.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "node node_modules/xtal-test/serve.js",
-    "start": "es-dev-server --app-index demo/dev-mwc.html --node-resolve --watch --open"
+    "serve": "node node_modules/xtal-test/serve.js"
   },
   "dependencies": {
     "virtualized-list": "2.2.0",
-    "trans-render": "0.0.169",
-    "xtal-element": "0.0.125"
+    "trans-render": "0.0.291",
+    "xtal-element": "0.0.419"
   },
   "devDependencies": {
-    "xtal-test": "0.0.44",
-    "es-module-shims": "0.4.6",
-    "es-dev-server": "1.48.1"
+    "xtal-test": "0.0.51"
   },
   "repository": {
     "type": "git",

@@ -1,13 +1,18 @@
 {
 	"compilerOptions": {
-		"target": "esnext",
-		"module":"esnext",
+		"target": "ESNext",
+		"module":"ESNext",
 		"sourceMap": false,
-		"experimentalDecorators": true,
+		"experimentalDecorators": false,
 		"newLine": "LF",
 		"strict": false,
 		"watch": true
 	},
+	"files": [
+		"vlist.ts",
+		"xtal-vlist2.ts",
+		"demo/xtal-vlist-customized.ts"
+	],
 	"exclude":[
 		"build",
 		"dist",
