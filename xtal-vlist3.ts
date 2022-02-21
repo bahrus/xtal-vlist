@@ -74,7 +74,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
             isC: true,
             rowHTML: '',
             mainTemplate: String.raw`
-            <slot name=row be-deslotted='{
+            <slot style=display:none name=row be-deslotted='{
                 "props": "outerHTML",
                 "propMap": {"outerHTML": "rowHTML"}
             }'></slot>

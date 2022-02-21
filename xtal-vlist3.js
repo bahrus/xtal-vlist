@@ -65,7 +65,7 @@ const ce = new CE({
             isC: true,
             rowHTML: '',
             mainTemplate: String.raw `
-            <slot name=row be-deslotted='{
+            <slot style=display:none name=row be-deslotted='{
                 "props": "outerHTML",
                 "propMap": {"outerHTML": "rowHTML"}
             }'></slot>
