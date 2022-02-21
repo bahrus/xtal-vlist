@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "virtualized-list": "2.2.0",
-    "trans-render": "0.0.488",
+    "trans-render": "0.0.489",
     "xtal-element": "0.0.479",
     "be-deslotted": "0.0.21"
   },

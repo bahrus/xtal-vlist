@@ -13,7 +13,8 @@ export interface XtalVlistProps{
     list: any[];
     newList: boolean;
     lastScrollPos: number;
-    rowTemplate: string;
+    rowHTML: string;
+    rowTemplate: HTMLTemplateElement;
 }
 
 export interface XtalVlistActions{
@@ -23,6 +24,9 @@ export interface XtalVlistActions{
         newList: boolean,
     }
     createVirtualList(self: this): void;
+    onRowHTML(self: this): {
+        rowTemplate: HTMLTemplateElement,
+    }
 }
 
 export interface VirtualList{

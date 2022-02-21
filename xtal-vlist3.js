@@ -17,7 +17,7 @@ export class XtalVList extends HTMLElement {
             newList: true,
         };
     }
-    createVirtualList({ totalRows, isC, topIndex, h, itemHeight, scrollCallback, rowXFormFn, containerXFormFn }) {
+    createVirtualList({ totalRows, isC, topIndex, h, itemHeight, scrollCallback, rowXFormFn, containerXFormFn, shadowRoot }) {
         if (this.virtualList === undefined) {
             this.virtualList = new VirtualList({
                 h,
@@ -28,6 +28,8 @@ export class XtalVList extends HTMLElement {
                 rowXFormFn,
                 containerXFormFn,
             });
+            const containerDiv = shadowRoot.querySelector('#container');
+            containerDiv.appendChild(this.virtualList.container);
         }
     }
     scrollCallback = (pos) => {
@@ -43,6 +45,13 @@ export class XtalVList extends HTMLElement {
     }
     containerXFormFn(el) {
     }
+    onRowHTML({ rowHTML }) {
+        const rowTemplate = document.createElement('template');
+        rowTemplate.innerHTML = rowHTML;
+        return {
+            rowTemplate
+        };
+    }
 }
 const ce = new CE({
     config: {
@@ -52,13 +61,13 @@ const ce = new CE({
             h: 600,
             totalRows: -1,
             isC: true,
-            rowTemplate: '',
+            rowHTML: '',
             mainTemplate: String.raw `
             <slot name=row be-deslotted='{
                 "props": "outerHTML",
-                "propMap": {"outerHTML": "rowTemplate"}
+                "propMap": {"outerHTML": "rowHTML"}
             }'></slot>
-            <div>hello</div>
+            <div id=container></div>
             <be-hive></be-hive>
             `,
         },
@@ -69,8 +78,11 @@ const ce = new CE({
         },
         actions: {
             ...beTransformed,
-            onList: 'list',
+            onList: {
+                ifAllOf: ['rowTemplate', 'list'],
+            },
             createVirtualList: 'newList',
+            onRowHTML: 'rowHTML',
         }
     },
     superclass: XtalVList,
