@@ -1,3 +1,5 @@
+import {TransformPlugins} from 'trans-render/lib/types';
+
 export interface XtalVlistProps{
     itemHeight: number,
     h: number,
@@ -11,6 +13,7 @@ export interface XtalVlistProps{
     focusId: string,
     doTransform: any | any[],
     rowTransform: any,
+    rowTransformPlugins: TransformPlugins,
     list: any[];
     newList: boolean;
     lastScrollPos: number;

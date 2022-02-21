@@ -50,9 +50,10 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
     }
     doTransform(row: number, el: HTMLElement){
         if(!this.#ctsMap.has(el)){
-            const {rowTransform, list} = this;
+            const {rowTransform, list, rowTransformPlugins} = this;
             const ctx: RenderContext = {
                 match: rowTransform,
+                plugins: rowTransformPlugins,
                 host: list[row],
             };
             const dtr = new DTR(ctx);
@@ -90,6 +91,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
             isC: true,
             rowHTML: '',
             rowTransform: {},
+            rowTransformPlugins: {},
             mainTemplate: String.raw`
             <slot style=display:none name=row be-deslotted='{
                 "props": "outerHTML",
@@ -116,3 +118,11 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
     superclass: XtalVList,
     mixins: [TemplMgmt],
 });
+
+export const XtalVListExt = ce.classDef!;
+
+declare global {
+    interface HTMLElementTagNameMap {
+        "xtal-vlist": XtalVListExt,
+    }
+}

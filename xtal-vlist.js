@@ -43,9 +43,10 @@ export class XtalVList extends HTMLElement {
     };
     doTransform(row, el) {
         if (!this.#ctsMap.has(el)) {
-            const { rowTransform, list } = this;
+            const { rowTransform, list, rowTransformPlugins } = this;
             const ctx = {
                 match: rowTransform,
+                plugins: rowTransformPlugins,
                 host: list[row],
             };
             const dtr = new DTR(ctx);
@@ -78,6 +79,7 @@ const ce = new CE({
             isC: true,
             rowHTML: '',
             rowTransform: {},
+            rowTransformPlugins: {},
             mainTemplate: String.raw `
             <slot style=display:none name=row be-deslotted='{
                 "props": "outerHTML",
@@ -104,3 +106,4 @@ const ce = new CE({
     superclass: XtalVList,
     mixins: [TemplMgmt],
 });
+export const XtalVListExt = ce.classDef;
