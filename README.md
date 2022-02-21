@@ -8,6 +8,8 @@ xtal-vlist provides a declarative "infinite scrolling" virtual list web componen
 
 [Demo](https://codepen.io/bahrus/pen/yLPjMER)
 
+It is a web component wrapper around [this library](https://sergimansilla.com/blog/virtual-scrolling/).
+
 ## Example
 
 ```html
