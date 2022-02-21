@@ -60,8 +60,14 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
             h: 600,
             totalRows: -1,
             isC: true,
+            rowTemplate: '',
             mainTemplate: String.raw`
+            <slot name=row be-deslotted='{
+                "props": "outerHTML",
+                "propMap": {"outerHTML": "rowTemplate"}
+            }'></slot>
             <div>hello</div>
+            <be-hive></be-hive>
             `,
         },
         propInfo: {

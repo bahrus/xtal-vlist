@@ -13,6 +13,7 @@ export interface XtalVlistProps{
     list: any[];
     newList: boolean;
     lastScrollPos: number;
+    rowTemplate: string;
 }
 
 export interface XtalVlistActions{
