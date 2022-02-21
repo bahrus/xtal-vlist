@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,
+        html {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            min-height: 100%;
+            min-width: 100%;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        @media only screen and (-webkit-min-device-pixel-ratio : 1.5),
+        only screen and (min-device-pixel-ratio : 1.5) {
+
+            /* Styles */
+            .container {
+                width: 100%;
+                height: 100%;
+                min-height: 100%;
+            }
+        }
+
+        .vrow {
+            width: 100%;
+            height: 30px;
+            max-height: 30px;
+            /*border-bottom: solid 1px #dbd9d9;*/
+            color: #000;
+            margin: 0;
+        }
+
+        .vrow p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border: none;
+            margin: 0;
+            color: #5b5b5b;
+            /*font-size: 1.5rem;*/
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <!-- <script src="../node_modules/virtualized-list/umd/virtualized-list.js"></script> -->
+        <xtal-vlist-customized id=vlist></xtal-vlist-customized>
+        
+        <script>
+            // vlist.generatorFn = row => {
+            //     const div = document.createElement('div');
+            //     div.textContent = 'hi ' + row;
+            //     return div;
+            // }
+            vlist.totalRows = 100000;
+        </script>
+        <script type=importmap>
+        {
+            "imports": {
+                "xtal-element/": "../node_modules/xtal-element/",
+                "trans-render/": "../node_modules/trans-render/"
+            }
+        }
+        </script>
+        <script type=module>
+            import './xtal-vlist-customized.js';
+
+        </script>
+
+
+    </div>
+</body>
+
+</html>

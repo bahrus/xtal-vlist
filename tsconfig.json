@@ -10,8 +10,7 @@
 	},
 	"files": [
 		"vlist.ts",
-		"xtal-vlist3.ts",
-		//"demo/xtal-vlist-customized.ts"
+		"xtal-vlist.ts",
 	],
 	"exclude":[
 		"build",

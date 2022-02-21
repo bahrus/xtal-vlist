@@ -1,142 +1,106 @@
-import { XtallatX, lispToCamel } from 'xtal-element/xtal-latx.js';
-import { hydrate } from 'trans-render/hydrate.js';
+import { CE } from 'trans-render/lib/CE.js';
+import { TemplMgmt, beTransformed } from 'trans-render/lib/mixins/TemplMgmt.js';
+import { DTR } from 'trans-render/lib/DTR.js';
 import { VirtualList } from './vlist.js';
-const item_height = 'item-height';
-const total_rows = 'total-rows';
-const h = 'h';
-const w = 'w';
-const top_index = 'top-index';
-export const focus_id = 'focus-id';
-export class XtalVList extends XtallatX(hydrate(HTMLElement)) {
-    constructor() {
-        super(...arguments);
-        this._c = false;
-        this._itemHeight = 30;
-        this._h = 600;
-        this._totalRows = -1;
-        this._topIndex = undefined;
-    }
-    static get observedAttributes() {
-        return super.observedAttributes.concat([item_height, total_rows, h, w, top_index]);
-    }
-    attributeChangedCallback(n, ov, nv) {
-        switch (n) {
-            case total_rows:
-            case item_height:
-            case h:
-            case w:
-            case top_index:
-                this['_' + lispToCamel(n)] = parseFloat(nv);
-                break;
-            default:
-                super.attributeChangedCallback(n, ov, nv);
-        }
-        this.onPropsChange();
-    }
-    connectedCallback() {
-        this.style.display = 'block';
-        this.propUp(XtalVList.observedAttributes.map(s => lispToCamel(s)));
-        this.propUp(['items']);
-        this._c = true;
-        this.onPropsChange();
-    }
-    transform(row, el) {
-        return el;
-    }
-    /**
-     * How high each item should be
-     */
-    get itemHeight() {
-        return this._itemHeight;
-    }
-    set itemHeight(nv) {
-        this.attr(item_height, nv.toString());
-    }
-    /**
-     * Height of component.  Default is 600
-     */
-    get h() {
-        return this._h;
-    }
-    set h(nv) {
-        this.attr(h, nv.toString());
-    }
-    /**
-     * Width of component
-     */
-    get w() {
-        return this._w;
-    }
-    set w(nv) {
-        this.attr(w, nv.toString());
-    }
-    get totalRows() {
-        return this._totalRows;
-    }
-    set totalRows(nv) {
-        delete this._list;
-        this.attr(total_rows, nv.toString());
-    }
-    get items() {
-        return this._items;
-    }
-    set items(nv) {
-        this._items = nv;
-        this.totalRows = nv.length;
-        if (this._lastScrollPos !== undefined) {
-            this._list.scrollToPosition(this._lastScrollPos);
-        }
-    }
-    get topIndex() {
-        return this._topIndex;
-    }
-    set topIndex(nv) {
-        if (nv !== undefined) {
-            this.attr(top_index, nv.toString());
-        }
-    }
-    rowXFormFn(el) { }
-    containerXFormFn(el) { }
-    onVListScroll(pos) {
-        this._lastScrollPos = pos;
-    }
-    setFocus() {
-        const focus = this._list.container.querySelector(`[${focus_id}="${this._lastFocusID}"]`);
+import 'be-deslotted/be-deslotted.js';
+export class XtalVList extends HTMLElement {
+    #ctsMap = new WeakMap();
+    setFocus({ virtualList, focusId, lastFocusId }) {
+        const focus = virtualList.container.querySelector(`[${focusId}="${lastFocusId}"]`);
         if (focus) {
             focus.focus();
-            event = new Event('focus', { bubbles: true, cancelable: true });
+            const event = new Event('focus', { bubbles: true, cancelable: true });
             focus.dispatchEvent(event);
         }
     }
-    onPropsChange() {
-        if (!this._c || this._totalRows < 0)
-            return;
-        if (!this._list) {
-            const b = this.onVListScroll.bind(this);
-            const c = this.rowXFormFn.bind(this);
-            const d = this.containerXFormFn.bind(this);
-            this._list = new VirtualList({
-                h: this._h,
-                itemHeight: this._itemHeight,
-                totalRows: this._totalRows,
-                scrollCallback: b,
-                generatorFn: (row) => this.transform(row, this.generate(row)),
-                rowXFormFn: c,
-                containerXFormFn: d,
+    onList({ list }) {
+        return {
+            totalRows: list.length,
+            newList: true,
+        };
+    }
+    createVirtualList({ totalRows, isC, topIndex, h, itemHeight, scrollCallback, rowXFormFn, containerXFormFn, shadowRoot }) {
+        if (this.virtualList === undefined) {
+            this.virtualList = new VirtualList({
+                h,
+                itemHeight,
+                totalRows,
+                scrollCallback,
+                generatorFn: (row) => this.doTransform(row, this.generate(row)),
+                rowXFormFn,
+                containerXFormFn,
             });
-            this._list.container.classList.add("container");
-            this.innerHTML = '';
-            this.appendChild(this._list.container);
-        }
-        if (this._topIndex !== undefined) {
-            this._list.scrollToIndex(this._topIndex);
-        }
-        if (this._lastFocusID !== undefined) {
-            for (let i = 1; i < 11; i++) {
-                setTimeout(() => {
-                    this.setFocus();
-                }, 50 * i);
-            }
+            const containerDiv = shadowRoot.querySelector('#container');
+            containerDiv.appendChild(this.virtualList.container);
         }
     }
+    scrollCallback = (pos) => {
+        this.lastScrollPos = pos;
+    };
+    rowXFormFn = (el, x) => {
+        const dtr = this.#ctsMap.get(el);
+        dtr.transform(el);
+    };
+    doTransform(row, el) {
+        if (!this.#ctsMap.has(el)) {
+            const { rowTransform, list } = this;
+            const ctx = {
+                match: rowTransform,
+                host: list[row],
+            };
+            const dtr = new DTR(ctx);
+            this.#ctsMap.set(el, dtr);
+        }
+        return el;
+    }
+    generate(row) {
+        const { rowTemplate } = this;
+        const clone = rowTemplate.content.cloneNode(true);
+        return clone.firstChild;
+    }
+    containerXFormFn(el) {
+    }
+    onRowHTML({ rowHTML }) {
+        const rowTemplate = document.createElement('template');
+        rowTemplate.innerHTML = rowHTML;
+        return {
+            rowTemplate
+        };
+    }
 }
+const ce = new CE({
+    config: {
+        tagName: 'xtal-vlist',
+        propDefaults: {
+            itemHeight: 30,
+            h: 600,
+            totalRows: -1,
+            isC: true,
+            rowHTML: '',
+            rowTransform: {},
+            mainTemplate: String.raw `
+            <slot style=display:none name=row be-deslotted='{
+                "props": "outerHTML",
+                "propMap": {"outerHTML": "rowHTML"}
+            }'></slot>
+            <div id=container></div>
+            <be-hive></be-hive>
+            `,
+        },
+        propInfo: {
+            newList: {
+                dry: false,
+            }
+        },
+        actions: {
+            ...beTransformed,
+            onList: {
+                ifAllOf: ['rowTemplate', 'list'],
+            },
+            createVirtualList: 'newList',
+            onRowHTML: 'rowHTML',
+        }
+    },
+    superclass: XtalVList,
+    mixins: [TemplMgmt],
+});
