@@ -46,7 +46,9 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
         return el;
     }
     generate(row: number) : HTMLElement{
-        throw "Needs Implementation";
+        const {rowTemplate} = this;
+        const clone = rowTemplate.content.cloneNode(true) as HTMLElement;
+        return clone.firstChild as HTMLElement;
     }
     containerXFormFn(el: HTMLElement){
     }
