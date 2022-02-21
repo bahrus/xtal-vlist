@@ -77,7 +77,7 @@ export class XtalVList extends HTMLElement implements ReactiveSurface{
         throw "Needs Implementation";
     }
 
-    transform(row: number, el: HTMLElement){
+    rowTransform(row: number, el: HTMLElement){
         return el;
     }
 }
@@ -99,7 +99,7 @@ export const newList = ({totalRows, isC, topIndex, self}: X) => {
             itemHeight: self.itemHeight,
             totalRows: self.totalRows,
             scrollCallback: b,
-            generatorFn: (row: number) => self.transform(row, self.generate(row)),
+            generatorFn: (row: number) => self.rowTransform(row, self.generate(row)),
             rowXFormFn: c,
             containerXFormFn: d,
         });

@@ -1,8 +1,10 @@
 import { CE } from 'trans-render/lib/CE.js';
 import { TemplMgmt, beTransformed } from 'trans-render/lib/mixins/TemplMgmt.js';
+import { DTR } from 'trans-render/lib/DTR.js';
 import { VirtualList } from './vlist.js';
 import 'be-deslotted/be-deslotted.js';
 export class XtalVList extends HTMLElement {
+    #ctsMap = new WeakMap();
     setFocus({ virtualList, focusId, lastFocusId }) {
         const focus = virtualList.container.querySelector(`[${focusId}="${lastFocusId}"]`);
         if (focus) {
@@ -24,7 +26,7 @@ export class XtalVList extends HTMLElement {
                 itemHeight,
                 totalRows,
                 scrollCallback,
-                generatorFn: (row) => this.transform(row, this.generate(row)),
+                generatorFn: (row) => this.doTransform(row, this.generate(row)),
                 rowXFormFn,
                 containerXFormFn,
             });
@@ -35,9 +37,20 @@ export class XtalVList extends HTMLElement {
     scrollCallback = (pos) => {
         this.lastScrollPos = pos;
     };
-    rowXFormFn = (el) => {
+    rowXFormFn = (el, x) => {
+        const dtr = this.#ctsMap.get(el);
+        dtr.transform(el);
     };
-    transform(row, el) {
+    doTransform(row, el) {
+        if (!this.#ctsMap.has(el)) {
+            const { rowTransform, list } = this;
+            const ctx = {
+                match: rowTransform,
+                host: list[row],
+            };
+            const dtr = new DTR(ctx);
+            this.#ctsMap.set(el, dtr);
+        }
         return el;
     }
     generate(row) {
@@ -64,6 +77,7 @@ const ce = new CE({
             totalRows: -1,
             isC: true,
             rowHTML: '',
+            rowTransform: {},
             mainTemplate: String.raw `
             <slot style=display:none name=row be-deslotted='{
                 "props": "outerHTML",

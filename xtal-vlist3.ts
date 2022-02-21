@@ -1,10 +1,14 @@
 import {XtalVlistActions, XtalVlistProps} from './types';
 import {CE} from 'trans-render/lib/CE.js';
 import {TemplMgmt, beTransformed, TemplMgmtProps} from 'trans-render/lib/mixins/TemplMgmt.js';
+import {RenderContext} from 'trans-render/lib/types';
+import {DTR} from 'trans-render/lib/DTR.js';
 import {VirtualList} from './vlist.js';
 import 'be-deslotted/be-deslotted.js';
 
+
 export class XtalVList extends HTMLElement implements XtalVlistActions{
+    #ctsMap = new WeakMap<HTMLElement, DTR>();
     setFocus({virtualList, focusId, lastFocusId}: this){
         const focus = virtualList.container.querySelector(`[${focusId}="${lastFocusId}"]`) as HTMLElement;
         if(focus) {
@@ -29,7 +33,7 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
                 itemHeight,
                 totalRows,
                 scrollCallback,
-                generatorFn: (row: number) => this.transform(row, this.generate(row)),
+                generatorFn: (row: number) => this.doTransform(row, this.generate(row)),
                 rowXFormFn,
                 containerXFormFn,
             });
@@ -40,9 +44,21 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
     scrollCallback = (pos: number) => {
         this.lastScrollPos = pos;
     }
-    rowXFormFn = (el: HTMLElement) => {
+    rowXFormFn = (el: HTMLElement, x: any) => {
+        const dtr = this.#ctsMap.get(el);
+        dtr.transform(el);
     }
-    transform(row: number, el: HTMLElement){
+    doTransform(row: number, el: HTMLElement){
+        if(!this.#ctsMap.has(el)){
+            const {rowTransform, list} = this;
+            const ctx: RenderContext = {
+                match: rowTransform,
+                host: list[row],
+            };
+            const dtr = new DTR(ctx);
+            this.#ctsMap.set(el, dtr);
+        }
+        
         return el;
     }
     generate(row: number) : HTMLElement{
@@ -73,6 +89,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
             totalRows: -1,
             isC: true,
             rowHTML: '',
+            rowTransform: {},
             mainTemplate: String.raw`
             <slot style=display:none name=row be-deslotted='{
                 "props": "outerHTML",

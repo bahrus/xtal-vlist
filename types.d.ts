@@ -9,7 +9,8 @@ export interface XtalVlistProps{
     virtualList: VirtualList,
     lastFocusId: string,
     focusId: string,
-    transform: any | any[],
+    doTransform: any | any[],
+    rowTransform: any,
     list: any[];
     newList: boolean;
     lastScrollPos: number;
