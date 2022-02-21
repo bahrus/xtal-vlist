@@ -34,6 +34,17 @@ The row-transform syntax is based on css-like [Declarative Trans-Render syntax (
 1.  npm instal xtal-vlist
     1.  In JS, import 'xtal-vlist/xtal-vlist.js';
 
+or
+
+2.  jsDelivr
+
+```html
+<script type=module>
+    import 'https://esm.run/xtal-vlist/xtal-vlist.js';
+</script>
+```
+
+
 ## Viewing Your Element Locally
 
 ```
