@@ -9,11 +9,12 @@
   },
   "dependencies": {
     "virtualized-list": "2.2.0",
-    "trans-render": "0.0.291",
-    "xtal-element": "0.0.419"
+    "trans-render": "0.0.488",
+    "xtal-element": "0.0.479",
+    "be-deslotted": "0.0.21"
   },
   "devDependencies": {
-    "xtal-test": "0.0.51"
+    "xtal-test": "0.0.55"
   },
   "repository": {
     "type": "git",

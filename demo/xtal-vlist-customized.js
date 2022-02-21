@@ -12,6 +12,7 @@ const testTemplate = html `
 </div>
 `;
 class XtalVListCustomized extends XtalVList {
+    static is = 'xtal-vlist-customized';
     generate(row) {
         const el = document.createElement("div");
         transform(testTemplate, {
@@ -23,5 +24,4 @@ class XtalVListCustomized extends XtalVList {
         return el;
     }
 }
-XtalVListCustomized.is = 'xtal-vlist-customized';
 xc.define(XtalVListCustomized);

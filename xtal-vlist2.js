@@ -33,17 +33,18 @@ const propDefMap = {
 const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
 //#endregion
 export class XtalVList extends HTMLElement {
-    constructor() {
-        super(...arguments);
-        this.propActions = propActions;
-        this.self = this;
-        this.reactor = new xc.Rx(this);
-    }
+    static observedAttributes = [...slicedPropDefs.boolNames, ...slicedPropDefs.numNames, ...slicedPropDefs.strNames];
     attributeChangedCallback(n, ov, nv) {
         xc.passAttrToProp(this, slicedPropDefs, n, ov, nv);
     }
+    propActions = propActions;
+    self = this;
+    reactor = new xc.Rx(this);
     rowXFormFn(el) { }
     containerXFormFn(el) { }
+    _lastFocusID;
+    _list;
+    _lastScrollPos;
     onVListScroll(pos) {
         this._lastScrollPos = pos;
     }
@@ -55,6 +56,7 @@ export class XtalVList extends HTMLElement {
             focus.dispatchEvent(event);
         }
     }
+    isC;
     connectedCallback() {
         xc.mergeProps(this, slicedPropDefs, {
             itemHeight: 30,
@@ -73,7 +75,6 @@ export class XtalVList extends HTMLElement {
         return el;
     }
 }
-XtalVList.observedAttributes = [...slicedPropDefs.boolNames, ...slicedPropDefs.numNames, ...slicedPropDefs.strNames];
 export const focus_id = 'focus-id';
 export const newList = ({ totalRows, isC, topIndex, self }) => {
     if (totalRows < 0)
