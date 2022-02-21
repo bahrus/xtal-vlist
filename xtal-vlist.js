@@ -1,26 +1,10 @@
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
-var _XtalVList_ctsMap;
 import { CE } from 'trans-render/lib/CE.js';
 import { TemplMgmt, beTransformed } from 'trans-render/lib/mixins/TemplMgmt.js';
 import { DTR } from 'trans-render/lib/DTR.js';
 import { VirtualList } from './vlist.js';
 import 'be-deslotted/be-deslotted.js';
 export class XtalVList extends HTMLElement {
-    constructor() {
-        super(...arguments);
-        _XtalVList_ctsMap.set(this, new WeakMap());
-        this.scrollCallback = (pos) => {
-            this.lastScrollPos = pos;
-        };
-        this.rowXFormFn = (el, x) => {
-            const dtr = __classPrivateFieldGet(this, _XtalVList_ctsMap, "f").get(el);
-            dtr.transform(el);
-        };
-    }
+    #ctsMap = new WeakMap();
     setFocus({ virtualList, focusId, lastFocusId }) {
         const focus = virtualList.container.querySelector(`[${focusId}="${lastFocusId}"]`);
         if (focus) {
@@ -50,8 +34,15 @@ export class XtalVList extends HTMLElement {
             containerDiv.appendChild(this.virtualList.container);
         }
     }
+    scrollCallback = (pos) => {
+        this.lastScrollPos = pos;
+    };
+    rowXFormFn = (el, x) => {
+        const dtr = this.#ctsMap.get(el);
+        dtr.transform(el);
+    };
     doTransform(row, el) {
-        if (!__classPrivateFieldGet(this, _XtalVList_ctsMap, "f").has(el)) {
+        if (!this.#ctsMap.has(el)) {
             const { rowTransform, list, rowTransformPlugins } = this;
             const ctx = {
                 match: rowTransform,
@@ -59,7 +50,7 @@ export class XtalVList extends HTMLElement {
                 host: list[row],
             };
             const dtr = new DTR(ctx);
-            __classPrivateFieldGet(this, _XtalVList_ctsMap, "f").set(el, dtr);
+            this.#ctsMap.set(el, dtr);
         }
         return el;
     }
@@ -78,7 +69,6 @@ export class XtalVList extends HTMLElement {
         };
     }
 }
-_XtalVList_ctsMap = new WeakMap();
 const ce = new CE({
     config: {
         tagName: 'xtal-vlist',
