@@ -20,7 +20,10 @@ export class XtalVList extends HTMLElement {
         };
     }
     createVirtualList({ totalRows, isC, topIndex, h, itemHeight, scrollCallback, rowXFormFn, containerXFormFn, shadowRoot }) {
-        //if(this.virtualList === undefined){
+        const containerDiv = shadowRoot.querySelector('#container');
+        if (this.virtualList !== undefined) {
+            containerDiv.innerHTML = '';
+        }
         this.virtualList = new VirtualList({
             h,
             itemHeight,
@@ -30,9 +33,7 @@ export class XtalVList extends HTMLElement {
             rowXFormFn,
             containerXFormFn,
         });
-        const containerDiv = shadowRoot.querySelector('#container');
         containerDiv.appendChild(this.virtualList.container);
-        //}
     }
     scrollCallback = (pos) => {
         this.lastScrollPos = pos;

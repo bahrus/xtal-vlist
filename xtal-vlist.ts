@@ -27,19 +27,20 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
             totalRows, isC, topIndex, h, itemHeight, scrollCallback,
             rowXFormFn, containerXFormFn, shadowRoot
     }: this): void {
-        //if(this.virtualList === undefined){
-            this.virtualList = new VirtualList({
-                h,
-                itemHeight,
-                totalRows,
-                scrollCallback,
-                generatorFn: (row: number) => this.doTransform(row, this.generate(row)),
-                rowXFormFn,
-                containerXFormFn,
-            });
-            const containerDiv = shadowRoot.querySelector('#container');
-            containerDiv.appendChild(this.virtualList.container);
-        //}
+        const containerDiv = shadowRoot.querySelector('#container');
+        if(this.virtualList !== undefined){
+            containerDiv.innerHTML = ''
+        }
+        this.virtualList = new VirtualList({
+            h,
+            itemHeight,
+            totalRows,
+            scrollCallback,
+            generatorFn: (row: number) => this.doTransform(row, this.generate(row)),
+            rowXFormFn,
+            containerXFormFn,
+        });
+        containerDiv.appendChild(this.virtualList.container);
     }
     scrollCallback = (pos: number) => {
         this.lastScrollPos = pos;
