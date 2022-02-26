@@ -20,19 +20,19 @@ export class XtalVList extends HTMLElement {
         };
     }
     createVirtualList({ totalRows, isC, topIndex, h, itemHeight, scrollCallback, rowXFormFn, containerXFormFn, shadowRoot }) {
-        if (this.virtualList === undefined) {
-            this.virtualList = new VirtualList({
-                h,
-                itemHeight,
-                totalRows,
-                scrollCallback,
-                generatorFn: (row) => this.doTransform(row, this.generate(row)),
-                rowXFormFn,
-                containerXFormFn,
-            });
-            const containerDiv = shadowRoot.querySelector('#container');
-            containerDiv.appendChild(this.virtualList.container);
-        }
+        //if(this.virtualList === undefined){
+        this.virtualList = new VirtualList({
+            h,
+            itemHeight,
+            totalRows,
+            scrollCallback,
+            generatorFn: (row) => this.doTransform(row, this.generate(row)),
+            rowXFormFn,
+            containerXFormFn,
+        });
+        const containerDiv = shadowRoot.querySelector('#container');
+        containerDiv.appendChild(this.virtualList.container);
+        //}
     }
     scrollCallback = (pos) => {
         this.lastScrollPos = pos;
