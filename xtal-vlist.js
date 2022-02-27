@@ -19,11 +19,19 @@ export class XtalVList extends HTMLElement {
             newList: true,
         };
     }
-    createVirtualList({ totalRows, isC, topIndex, itemHeight, scrollCallback, rowXFormFn, containerXFormFn, shadowRoot, heightenerParts }) {
+    createVirtualList({ totalRows, isC, topIndex, itemHeight, rowXFormFn, containerXFormFn, shadowRoot, heightenerParts }) {
         heightenerParts[0].deref().style.height = totalRows * itemHeight + 'px';
     }
-    onScroll({}) {
-        console.log('iah');
+    onScroll({ containerScrollTop, shadowRoot }) {
+        console.log(containerScrollTop);
+        const contents = shadowRoot.querySelectorAll('.content');
+        const scroller = shadowRoot.querySelector('.scroller');
+        let count = 0;
+        const scrollerTop = scroller.getBoundingClientRect().top;
+        contents.forEach(el => {
+            el.style.top = (scrollerTop - containerScrollTop + el.clientHeight * count) + 'px';
+            count++;
+        });
     }
     rowXFormFn = async (el, x) => {
         const dtr = this.#ctsMap.get(el);
@@ -70,6 +78,7 @@ const ce = new CE({
             totalRows: -1,
             isC: true,
             rowHTML: '',
+            containerScrollTop: 0,
             rowTransform: {},
             rowTransformPlugins: {},
             mainTemplate: String.raw `
@@ -77,9 +86,31 @@ const ce = new CE({
                 "props": "outerHTML",
                 "propMap": {"outerHTML": "rowHTML"}
             }'></slot>
-            <div class=container part=container>
-                <div part=scroller style="overflow:auto;height:inherit;width:30px;">
-                    <div part=heightener style="opacity:0;top:0;left:0;width:1px;height:inherit;"></div>
+            <div class=scroller part=scroller style="overflow:auto;height:inherit;width:inherit;">
+                <div part=heightener style="opacity:0;top:0;left:0;width:1px;height:inherit;"></div>
+                <div class=content part=content1>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>6</div>
+                </div>
+                <div class=content part=content2>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>6</div>
+                </div>
+                <div class=content part=content3>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>6</div>
                 </div>
             </div>
             </div>
@@ -87,11 +118,16 @@ const ce = new CE({
             `,
             styles: String.raw `
 <style>
-    .container{
-        overflow:hidden;
+    .scroller{
+        display:flex;
+        overflow:auto;
         border:1px solid black;
         height:inherit;
         width:inherit;
+    }
+    .content{
+        overflow: hidden;
+        position: absolute;
     }
 </style>
             `,
@@ -112,6 +148,7 @@ const ce = new CE({
             },
             createVirtualList: 'newList',
             onRowHTML: 'rowHTML',
+            onScroll: 'containerScrollTop',
         }
     },
     superclass: XtalVList,
