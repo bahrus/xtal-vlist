@@ -33,9 +33,6 @@ export interface XtalVlistActions{
     onRowHTML(self: this): {
         rowTemplate: HTMLTemplateElement,
     }
-    onScroll(self: this): void;
+    //onScroll(self: this): void;
 }
 
-// export interface VirtualList{
-//     container: HTMLElement;
-// }

@@ -3,21 +3,14 @@ import {CE} from 'trans-render/lib/CE.js';
 import {TemplMgmt, beTransformed, TemplMgmtProps} from 'trans-render/lib/mixins/TemplMgmt.js';
 import {RenderContext} from 'trans-render/lib/types';
 import {DTR} from 'trans-render/lib/DTR.js';
-import {VirtualList} from './vlist2.js';
 import 'be-deslotted/be-deslotted.js';
 
 
 export class XtalVList extends HTMLElement implements XtalVlistActions{
     #ctsMap = new WeakMap<HTMLElement, DTR>();
     heightenerParts!: WeakRef<HTMLDivElement>[];
-    setFocus({focusId, lastFocusId}: this){
-        const focus = virtualList.container.querySelector(`[${focusId}="${lastFocusId}"]`) as HTMLElement;
-        if(focus) {
-            focus.focus();
-            const event = new Event('focus', { bubbles: true, cancelable: true });
-            focus.dispatchEvent(event);
-        }
-    }
+    scrollerParts!: WeakRef<HTMLDivElement>[];
+    containerParts!: WeakRef<HTMLDivElement>[];
     onList({list}: this){
         return {
             totalRows: list.length,
@@ -26,21 +19,33 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
     }
     createVirtualList({
             totalRows, isC, topIndex, itemHeight,
-            rowXFormFn, containerXFormFn, shadowRoot, heightenerParts
+            rowXFormFn, containerXFormFn, shadowRoot, heightenerParts, rowTemplate
     }: this): void {
         heightenerParts![0].deref().style.height = totalRows * itemHeight + 'px';
+        const pages = Math.floor(totalRows / 100);
+        const fragment = document.createDocumentFragment();
+        for(let i = 0; i < pages; i++){
+            const page = document.createElement('template');
+            const beIntersectionalArgs = {
+                archive: true
+            };
+            page.setAttribute('be-intersectional', JSON.stringify(beIntersectionalArgs));
+            const lbound = i*100;
+            const ubound = lbound + 100;
+            const beRepeatedArgs = {
+                list: 'list',
+                lbound,
+                ubound
+            }
+            const rowTemplateClone = rowTemplate.cloneNode(true) as HTMLElement;
+            rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
+            page.content.appendChild(rowTemplateClone);
+            fragment.appendChild(page);
+        }
+        const container = this.containerParts[0].deref()!;
+        container.appendChild(fragment);
     }
-    onScroll({containerScrollTop, shadowRoot}: this){
-        console.log(containerScrollTop);
-        const contents = shadowRoot.querySelectorAll('.content');
-        const scroller = shadowRoot.querySelector('.scroller');
-        let count = 0;
-        const scrollerTop = scroller.getBoundingClientRect().top;
-        contents.forEach(el => {
-            el.style.top = (scrollerTop - containerScrollTop + el.clientHeight * count) + 'px';
-            count++;
-        });
-    }
+
     rowXFormFn = async (el: HTMLElement, x: any) => {
         const dtr = this.#ctsMap.get(el);
         await dtr.transform(el);
@@ -98,9 +103,11 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
                 "props": "outerHTML",
                 "propMap": {"outerHTML": "rowHTML"}
             }'></slot>
-            <div class=scroller part=scroller style="overflow:auto;height:inherit;width:inherit;">
+            <div class=scroller part=scroller>
                 <div part=heightener style="opacity:0;top:0;left:0;width:1px;height:inherit;"></div>
-                <div class=content part=content1>
+                <div part=container>
+                </div>
+                <!-- <div class=content part=content1>
                     <div>1</div>
                     <div>2</div>
                     <div>3</div>
@@ -123,7 +130,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
                     <div>4</div>
                     <div>5</div>
                     <div>6</div>
-                </div>
+                </div> -->
             </div>
             </div>
             <be-hive></be-hive>
@@ -145,7 +152,8 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
             `,
             transform: {
                 heightenerParts: true,
-                scrollerParts: [{}, {scroll: {prop: 'containerScrollTop', vft: 'scrollTop'}}]
+                scrollerParts: true,
+                containerParts: true,
             }
         },
         propInfo: {
@@ -158,9 +166,11 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
             onList: {
                 ifAllOf: ['rowTemplate', 'list'],
             },
-            createVirtualList: 'newList',
+            createVirtualList: {
+                ifAllOf: ['newList', 'rowTemplate']
+            } ,
             onRowHTML: 'rowHTML',
-            onScroll: 'containerScrollTop',
+            //onScroll: 'containerScrollTop',
         }
     },
     superclass: XtalVList,
