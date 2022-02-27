@@ -1,11 +1,11 @@
 import { CE } from 'trans-render/lib/CE.js';
 import { TemplMgmt, beTransformed } from 'trans-render/lib/mixins/TemplMgmt.js';
 import { DTR } from 'trans-render/lib/DTR.js';
-import { VirtualList } from './vlist.js';
 import 'be-deslotted/be-deslotted.js';
 export class XtalVList extends HTMLElement {
     #ctsMap = new WeakMap();
-    setFocus({ virtualList, focusId, lastFocusId }) {
+    heightenerParts;
+    setFocus({ focusId, lastFocusId }) {
         const focus = virtualList.container.querySelector(`[${focusId}="${lastFocusId}"]`);
         if (focus) {
             focus.focus();
@@ -19,40 +19,32 @@ export class XtalVList extends HTMLElement {
             newList: true,
         };
     }
-    createVirtualList({ totalRows, isC, topIndex, h, itemHeight, scrollCallback, rowXFormFn, containerXFormFn, shadowRoot }) {
-        const containerDiv = shadowRoot.querySelector('#container');
-        if (this.virtualList !== undefined) {
-            containerDiv.innerHTML = '';
-        }
-        this.virtualList = new VirtualList({
-            h,
-            itemHeight,
-            totalRows,
-            scrollCallback,
-            generatorFn: (row) => this.doTransform(row, this.generate(row)),
-            rowXFormFn,
-            containerXFormFn,
-        });
-        containerDiv.appendChild(this.virtualList.container);
+    createVirtualList({ totalRows, isC, topIndex, itemHeight, scrollCallback, rowXFormFn, containerXFormFn, shadowRoot, heightenerParts }) {
+        heightenerParts[0].deref().style.height = totalRows * itemHeight + 'px';
     }
-    scrollCallback = (pos) => {
-        this.lastScrollPos = pos;
-    };
+    onScroll({}) {
+        console.log('iah');
+    }
     rowXFormFn = async (el, x) => {
         const dtr = this.#ctsMap.get(el);
         await dtr.transform(el);
     };
     doTransform(row, el) {
+        let dtr = undefined;
+        const { list } = this;
         if (!this.#ctsMap.has(el)) {
-            const { rowTransform, list, rowTransformPlugins } = this;
+            const { rowTransform, rowTransformPlugins } = this;
             const ctx = {
                 match: rowTransform,
                 plugins: rowTransformPlugins,
-                host: list[row],
             };
             const dtr = new DTR(ctx);
             this.#ctsMap.set(el, dtr);
         }
+        if (dtr === undefined) {
+            dtr = this.#ctsMap.get(el);
+        }
+        dtr.ctx.host = list[row];
         return el;
     }
     generate(row) {
@@ -75,7 +67,6 @@ const ce = new CE({
         tagName: 'xtal-vlist',
         propDefaults: {
             itemHeight: 30,
-            h: 600,
             totalRows: -1,
             isC: true,
             rowHTML: '',
@@ -86,9 +77,28 @@ const ce = new CE({
                 "props": "outerHTML",
                 "propMap": {"outerHTML": "rowHTML"}
             }'></slot>
-            <div id=container></div>
+            <div class=container part=container>
+                <div part=scroller style="overflow:auto;height:inherit;width:30px;">
+                    <div part=heightener style="opacity:0;top:0;left:0;width:1px;height:inherit;"></div>
+                </div>
+            </div>
+            </div>
             <be-hive></be-hive>
             `,
+            styles: String.raw `
+<style>
+    .container{
+        overflow:hidden;
+        border:1px solid black;
+        height:inherit;
+        width:inherit;
+    }
+</style>
+            `,
+            transform: {
+                heightenerParts: true,
+                scrollerParts: [{}, { scroll: { prop: 'containerScrollTop', vft: 'scrollTop' } }]
+            }
         },
         propInfo: {
             newList: {

@@ -3,13 +3,14 @@ import {CE} from 'trans-render/lib/CE.js';
 import {TemplMgmt, beTransformed, TemplMgmtProps} from 'trans-render/lib/mixins/TemplMgmt.js';
 import {RenderContext} from 'trans-render/lib/types';
 import {DTR} from 'trans-render/lib/DTR.js';
-import {VirtualList} from './vlist.js';
+import {VirtualList} from './vlist2.js';
 import 'be-deslotted/be-deslotted.js';
 
 
 export class XtalVList extends HTMLElement implements XtalVlistActions{
     #ctsMap = new WeakMap<HTMLElement, DTR>();
-    setFocus({virtualList, focusId, lastFocusId}: this){
+    heightenerParts!: WeakRef<HTMLDivElement>[];
+    setFocus({focusId, lastFocusId}: this){
         const focus = virtualList.container.querySelector(`[${focusId}="${lastFocusId}"]`) as HTMLElement;
         if(focus) {
             focus.focus();
@@ -24,43 +25,34 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
         }
     }
     createVirtualList({
-            totalRows, isC, topIndex, h, itemHeight, scrollCallback,
-            rowXFormFn, containerXFormFn, shadowRoot
+            totalRows, isC, topIndex, itemHeight, scrollCallback,
+            rowXFormFn, containerXFormFn, shadowRoot, heightenerParts
     }: this): void {
-        const containerDiv = shadowRoot.querySelector('#container');
-        if(this.virtualList !== undefined){
-            containerDiv.innerHTML = ''
-        }
-        this.virtualList = new VirtualList({
-            h,
-            itemHeight,
-            totalRows,
-            scrollCallback,
-            generatorFn: (row: number) => this.doTransform(row, this.generate(row)),
-            rowXFormFn,
-            containerXFormFn,
-        });
-        containerDiv.appendChild(this.virtualList.container);
+        heightenerParts![0].deref().style.height = totalRows * itemHeight + 'px';
     }
-    scrollCallback = (pos: number) => {
-        this.lastScrollPos = pos;
+    onScroll({}: this){
+        console.log('iah');
     }
     rowXFormFn = async (el: HTMLElement, x: any) => {
         const dtr = this.#ctsMap.get(el);
         await dtr.transform(el);
     }
     doTransform(row: number, el: HTMLElement){
+        let dtr: DTR | undefined = undefined;
+        const {list} = this;
         if(!this.#ctsMap.has(el)){
-            const {rowTransform, list, rowTransformPlugins} = this;
+            const {rowTransform, rowTransformPlugins} = this;
             const ctx: RenderContext = {
                 match: rowTransform,
                 plugins: rowTransformPlugins,
-                host: list[row],
             };
             const dtr = new DTR(ctx);
             this.#ctsMap.set(el, dtr);
         }
-        
+        if(dtr === undefined){
+            dtr = this.#ctsMap.get(el)!;
+        }
+        dtr.ctx.host = list[row];
         return el;
     }
     generate(row: number) : HTMLElement{
@@ -87,7 +79,6 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
         tagName: 'xtal-vlist',
         propDefaults: {
             itemHeight: 30,
-            h: 600,
             totalRows: -1,
             isC: true,
             rowHTML: '',
@@ -98,9 +89,28 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
                 "props": "outerHTML",
                 "propMap": {"outerHTML": "rowHTML"}
             }'></slot>
-            <div id=container></div>
+            <div class=container part=container>
+                <div part=scroller style="overflow:auto;height:inherit;width:30px;">
+                    <div part=heightener style="opacity:0;top:0;left:0;width:1px;height:inherit;"></div>
+                </div>
+            </div>
+            </div>
             <be-hive></be-hive>
             `,
+            styles: String.raw`
+<style>
+    .container{
+        overflow:hidden;
+        border:1px solid black;
+        height:inherit;
+        width:inherit;
+    }
+</style>
+            `,
+            transform: {
+                heightenerParts: true,
+                scrollerParts: [{}, {scroll: {prop: 'containerScrollTop', vft: 'scrollTop'}}]
+            }
         },
         propInfo: {
             newList: {

@@ -2,13 +2,14 @@ import {TransformPlugins} from 'trans-render/lib/types';
 
 export interface XtalVlistProps{
     itemHeight: number,
-    h: number,
-    w: number,
+    // height: string,
+    // width: string,
     totalRows: number,
     items: any[],
     isC: boolean,
     topIndex: number,
-    virtualList: VirtualList,
+    containerScrollTop: number,
+    //virtualList: VirtualList,
     lastFocusId: string,
     focusId: string,
     doTransform: any | any[],
@@ -19,6 +20,7 @@ export interface XtalVlistProps{
     lastScrollPos: number;
     rowHTML: string;
     rowTemplate: HTMLTemplateElement;
+    
 }
 
 export interface XtalVlistActions{
@@ -31,8 +33,9 @@ export interface XtalVlistActions{
     onRowHTML(self: this): {
         rowTemplate: HTMLTemplateElement,
     }
+    onScroll(self: this): void;
 }
 
-export interface VirtualList{
-    container: HTMLElement;
-}
+// export interface VirtualList{
+//     container: HTMLElement;
+// }
