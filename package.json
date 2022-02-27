@@ -17,13 +17,17 @@
   },
   "dependencies": {
     "virtualized-list": "2.2.0",
-    "trans-render": "0.0.489",
-    "xtal-element": "0.0.479",
+    "trans-render": "0.0.502",
+    "xtal-element": "0.0.482",
     "be-deslotted": "0.0.21"
   },
   "devDependencies": {
     "xtal-test": "0.0.55",
-    "@skypack/package-check": "0.2.2"
+    "@skypack/package-check": "0.2.2",
+    "xtal-tree": "0.0.76",
+    "be-reformable": "0.0.32",
+    "be-channeling": "0.0.3",
+    "be-observant": "0.0.99"
   },
   "exports": {
     ".": "./xtal-vlist.js",

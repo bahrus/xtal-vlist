@@ -95,7 +95,7 @@ VirtualList.prototype.scrollToPosition = function(pos){
   this.container.scrollTop = pos;
 }
 
-VirtualList.prototype.createRow = function(i) {
+VirtualList.prototype.createRow = async function(i) {
   var item;
   if (this.generatorFn)
     item = this.generatorFn(i);
@@ -115,7 +115,7 @@ VirtualList.prototype.createRow = function(i) {
   item.style.position = 'absolute';
   item.style.top = (i * this.itemHeight) + 'px';
   if(this.rowXFormFn){
-    this.rowXFormFn(item);
+    await this.rowXFormFn(item);
   }
   return item;
 };

@@ -1,7 +1,7 @@
 import { CE } from 'trans-render/lib/CE.js';
 import { TemplMgmt, beTransformed } from 'trans-render/lib/mixins/TemplMgmt.js';
 import { DTR } from 'trans-render/lib/DTR.js';
-import { VirtualList } from './vlist.js';
+import { VirtualList } from './vlist2.js';
 import 'be-deslotted/be-deslotted.js';
 export class XtalVList extends HTMLElement {
     #ctsMap = new WeakMap();
@@ -38,9 +38,9 @@ export class XtalVList extends HTMLElement {
     scrollCallback = (pos) => {
         this.lastScrollPos = pos;
     };
-    rowXFormFn = (el, x) => {
+    rowXFormFn = async (el, x) => {
         const dtr = this.#ctsMap.get(el);
-        dtr.transform(el);
+        await dtr.transform(el);
     };
     doTransform(row, el) {
         if (!this.#ctsMap.has(el)) {

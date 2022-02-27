@@ -3,7 +3,7 @@ import {CE} from 'trans-render/lib/CE.js';
 import {TemplMgmt, beTransformed, TemplMgmtProps} from 'trans-render/lib/mixins/TemplMgmt.js';
 import {RenderContext} from 'trans-render/lib/types';
 import {DTR} from 'trans-render/lib/DTR.js';
-import {VirtualList} from './vlist.js';
+import {VirtualList} from './vlist2.js';
 import 'be-deslotted/be-deslotted.js';
 
 
@@ -45,9 +45,9 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
     scrollCallback = (pos: number) => {
         this.lastScrollPos = pos;
     }
-    rowXFormFn = (el: HTMLElement, x: any) => {
+    rowXFormFn = async (el: HTMLElement, x: any) => {
         const dtr = this.#ctsMap.get(el);
-        dtr.transform(el);
+        await dtr.transform(el);
     }
     doTransform(row: number, el: HTMLElement){
         if(!this.#ctsMap.has(el)){
