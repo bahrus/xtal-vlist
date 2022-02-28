@@ -27,24 +27,27 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
         const pages = Math.floor(totalRows / 100);
         const fragment = document.createDocumentFragment();
         for(let i = 0; i < pages; i++){
+            const container = document.createElement('div');
+            container.classList.add('iah');
             const page = document.createElement('template');
             const beIntersectionalArgs = {
                 archive: false
             };
             page.setAttribute('be-intersectional', JSON.stringify(beIntersectionalArgs));
-            const lbound = i*100;
-            const ubound = lbound + 100;
+            const lBound = i*100;
+            const uBound = lBound + 100;
             const beRepeatedArgs = {
                 list: '.list',
-                lbound,
-                ubound,
+                lBound,
+                uBound,
                 debug: true,
                 transform: rowTransform,
             }
             const rowTemplateClone = rowTemplate.cloneNode(true) as HTMLElement;
             rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
             page.content.appendChild(rowTemplateClone);
-            fragment.appendChild(page);
+            container.appendChild(page);
+            fragment.appendChild(container);
         }
         const container = this.containerParts[0].deref()!;
         container.appendChild(fragment);
