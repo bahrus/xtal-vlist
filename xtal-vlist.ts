@@ -4,7 +4,8 @@ import {TemplMgmt, beTransformed, TemplMgmtProps} from 'trans-render/lib/mixins/
 import {RenderContext} from 'trans-render/lib/types';
 import {DTR} from 'trans-render/lib/DTR.js';
 import 'be-deslotted/be-deslotted.js';
-
+import 'be-intersectional/be-intersectional.js';
+import 'be-repeated/be-repeated.js';
 
 export class XtalVList extends HTMLElement implements XtalVlistActions{
     #ctsMap = new WeakMap<HTMLElement, DTR>();
@@ -19,23 +20,26 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
     }
     createVirtualList({
             totalRows, isC, topIndex, itemHeight,
-            rowXFormFn, containerXFormFn, shadowRoot, heightenerParts, rowTemplate
+            rowXFormFn, containerXFormFn, shadowRoot, heightenerParts, rowTemplate,
+            rowTransform,
     }: this): void {
-        heightenerParts![0].deref().style.height = totalRows * itemHeight + 'px';
+        //heightenerParts![0].deref().style.height = totalRows * itemHeight + 'px';
         const pages = Math.floor(totalRows / 100);
         const fragment = document.createDocumentFragment();
         for(let i = 0; i < pages; i++){
             const page = document.createElement('template');
             const beIntersectionalArgs = {
-                archive: true
+                archive: false
             };
             page.setAttribute('be-intersectional', JSON.stringify(beIntersectionalArgs));
             const lbound = i*100;
             const ubound = lbound + 100;
             const beRepeatedArgs = {
-                list: 'list',
+                list: '.list',
                 lbound,
-                ubound
+                ubound,
+                debug: true,
+                transform: rowTransform,
             }
             const rowTemplateClone = rowTemplate.cloneNode(true) as HTMLElement;
             rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
@@ -104,33 +108,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
                 "propMap": {"outerHTML": "rowHTML"}
             }'></slot>
             <div class=scroller part=scroller>
-                <div part=heightener style="opacity:0;top:0;left:0;width:1px;height:inherit;"></div>
-                <div part=container>
-                </div>
-                <!-- <div class=content part=content1>
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
-                    <div>5</div>
-                    <div>6</div>
-                </div>
-                <div class=content part=content2>
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
-                    <div>5</div>
-                    <div>6</div>
-                </div>
-                <div class=content part=content3>
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
-                    <div>5</div>
-                    <div>6</div>
-                </div> -->
+                <div part=container></div>
             </div>
             </div>
             <be-hive></be-hive>
@@ -144,10 +122,14 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
         height:inherit;
         width:inherit;
     }
-    .content{
-        overflow: hidden;
-        position: absolute;
+    template[be-intersectional], template[is-intersectional]{
+            display:block;
+            height: 1000px;
     }
+    /* template[be-intersectional].expanded, template[is-intersectional].expanded{
+            display:none;
+    }     */
+
 </style>
             `,
             transform: {
