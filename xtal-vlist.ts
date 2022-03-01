@@ -111,7 +111,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
                 "propMap": {"outerHTML": "rowHTML"}
             }'></slot>
             <div class=scroller part=scroller>
-                <div part=container></div>
+                <div class=container part=container></div>
             </div>
             </div>
             <be-hive></be-hive>
@@ -120,12 +120,22 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
 <style>
     .scroller{
         display:flex;
+        flex-direction:column;
         overflow:auto;
         border:1px solid black;
         height:inherit;
         width:inherit;
     }
-    template[be-intersectional], template[is-intersectional]{
+    .container{
+        display:flex;
+        flex-direction:column;
+    }
+    .iah{
+        min-height: 800px;
+        display:flex;
+        flex-direction:column;
+    }
+    template[be-intersectionalx], template[be-intersectional], template[is-intersectional]{
             display:block;
             height: 1000px;
     }
