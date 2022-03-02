@@ -32,10 +32,15 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
             const page = document.createElement('template');
             const beIntersectionalArgs = {
                 archive: true,
-                enterDelay: 2000,
-                exitDelay: 4000,
+                enterDelay: 3000,
+                exitDelay: 6000,
             };
             page.setAttribute('be-intersectional', JSON.stringify(beIntersectionalArgs));
+            //const enterDiv = document.createElement('div');
+            //enterDiv.dataset.enterDiv = 'true';
+            //page.content.appendChild(enterDiv);
+            const bodyDiv = document.createElement('div');
+            bodyDiv.dataset.bodyDiv = 'true';
             const lBound = i*100;
             const uBound = lBound + 100;
             const beRepeatedArgs = {
@@ -47,7 +52,11 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
             }
             const rowTemplateClone = rowTemplate.cloneNode(true) as HTMLElement;
             rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
-            page.content.appendChild(rowTemplateClone);
+            bodyDiv.appendChild(rowTemplateClone);
+            page.content.appendChild(bodyDiv);
+            //const exitDiv = document.createElement('div');
+            //exitDiv.dataset.exitDiv = 'true';
+            //page.content.appendChild(exitDiv);
             container.appendChild(page);
             fragment.appendChild(container);
         }

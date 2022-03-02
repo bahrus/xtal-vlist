@@ -20,7 +20,7 @@
     "trans-render": "0.0.502",
     "xtal-element": "0.0.482",
     "be-deslotted": "0.0.21",
-    "be-intersectional": "0.0.29",
+    "be-intersectional": "0.0.30",
     "be-repeated": "0.0.55"
   },
   "devDependencies": {
