@@ -24,7 +24,9 @@ export class XtalVList extends HTMLElement {
             container.classList.add('iah');
             const page = document.createElement('template');
             const beIntersectionalArgs = {
-                archive: false
+                archive: true,
+                enterDelay: 2000,
+                exitDelay: 4000,
             };
             page.setAttribute('be-intersectional', JSON.stringify(beIntersectionalArgs));
             const lBound = i * 100;
@@ -127,9 +129,9 @@ const ce = new CE({
             display:block;
             height: 1000px;
     }
-    /* template[be-intersectional].expanded, template[is-intersectional].expanded{
+    template[be-intersectional].expanded, template[is-intersectional].expanded{
             display:none;
-    }     */
+    }    
 
 </style>
             `,

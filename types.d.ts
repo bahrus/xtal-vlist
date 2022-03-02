@@ -24,7 +24,7 @@ export interface XtalVlistProps{
 }
 
 export interface XtalVlistActions{
-    setFocus(self: this): void;
+    //setFocus(self: this): void;
     onList(self: this): {
         totalRows: number,
         newList: boolean,
