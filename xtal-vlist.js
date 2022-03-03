@@ -24,8 +24,8 @@ export class XtalVList extends HTMLElement {
             container.classList.add('iah');
             const page = document.createElement('template');
             const beIntersectionalArgs = {
-                enterDelay: 3000,
-                exitDelay: 6000,
+                enterDelay: 16,
+                exitDelay: 32,
             };
             page.setAttribute('be-intersectional', JSON.stringify(beIntersectionalArgs));
             //const enterDiv = document.createElement('div');
