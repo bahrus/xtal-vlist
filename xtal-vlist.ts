@@ -35,10 +35,12 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
                 exitDelay: 32,
             };
             page.setAttribute('be-intersectional', JSON.stringify(beIntersectionalArgs));
+            page.dataset.vlistIdx = i.toString();
             //const enterDiv = document.createElement('div');
             //enterDiv.dataset.enterDiv = 'true';
             //page.content.appendChild(enterDiv);
             const bodyDiv = document.createElement('div');
+            bodyDiv.dataset.vlistIdx = i.toString();
             bodyDiv.dataset.bodyDiv = 'true';
             const lBound = i*100;
             const uBound = lBound + 100;
