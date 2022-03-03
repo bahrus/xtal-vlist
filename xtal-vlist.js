@@ -24,7 +24,6 @@ export class XtalVList extends HTMLElement {
             container.classList.add('iah');
             const page = document.createElement('template');
             const beIntersectionalArgs = {
-                archive: true,
                 enterDelay: 3000,
                 exitDelay: 6000,
             };
