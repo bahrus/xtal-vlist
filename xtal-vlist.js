@@ -5,6 +5,7 @@ import('be-intersectional/be-intersectional.js');
 import('be-repeated/be-repeated.js');
 export class XtalVList extends HTMLElement {
     #ctsMap = new WeakMap();
+    #previousPageNo = 0;
     containerParts;
     onList({ list }) {
         return {
@@ -27,7 +28,7 @@ export class XtalVList extends HTMLElement {
         `;
         const templ = document.createElement('template');
         templ.innerHTML = templS;
-        for (let i = 0; i < pages; i++) {
+        for (let i = this.#previousPageNo; i < pages; i++) {
             const container = templ.content.cloneNode(true);
             const bodyDiv = container.querySelector('template').content.querySelector('.rowContainer');
             const lBound = i * pageSize;
@@ -42,6 +43,7 @@ export class XtalVList extends HTMLElement {
             rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
             bodyDiv.appendChild(rowTemplateClone);
             fragment.appendChild(container);
+            this.#previousPageNo = i + 1;
         }
         const container = this.containerParts[0].deref();
         container.appendChild(fragment);
