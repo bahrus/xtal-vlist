@@ -19,7 +19,7 @@ export class XtalVList extends HTMLElement {
         const beIntersectionalAttr = JSON.stringify(beIntersectional);
         for (let i = 0; i < pages; i++) {
             const container = document.createElement('div');
-            container.classList.add('iah');
+            container.classList.add('page');
             const page = document.createElement('template');
             page.setAttribute('be-intersectional', beIntersectionalAttr);
             page.dataset.vlistIdx = i.toString();
@@ -111,7 +111,7 @@ const ce = new CE({
         display:flex;
         flex-direction:column;
     }
-    .iah{
+    .page{
         min-height: 800px;
         display:flex;
         flex-direction:column;
