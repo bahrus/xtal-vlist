@@ -41,7 +41,7 @@ export class XtalVList extends HTMLElement {
                 list: '.list',
                 lBound,
                 uBound,
-                debug: true,
+                //debug: true,
                 transform: rowTransform,
             };
             const rowTemplateClone = rowTemplate.cloneNode(true);
