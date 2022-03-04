@@ -16,7 +16,6 @@ export class XtalVList extends HTMLElement {
         };
     }
     createVirtualList({ totalRows, rowTemplate, rowTransform, }) {
-        //heightenerParts![0].deref().style.height = totalRows * itemHeight + 'px';
         const pages = Math.floor(totalRows / 100);
         const fragment = document.createDocumentFragment();
         for (let i = 0; i < pages; i++) {
@@ -29,9 +28,6 @@ export class XtalVList extends HTMLElement {
             };
             page.setAttribute('be-intersectional', JSON.stringify(beIntersectionalArgs));
             page.dataset.vlistIdx = i.toString();
-            //const enterDiv = document.createElement('div');
-            //enterDiv.dataset.enterDiv = 'true';
-            //page.content.appendChild(enterDiv);
             const bodyDiv = document.createElement('div');
             bodyDiv.dataset.vlistIdx = i.toString();
             bodyDiv.dataset.bodyDiv = 'true';
@@ -48,9 +44,6 @@ export class XtalVList extends HTMLElement {
             rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
             bodyDiv.appendChild(rowTemplateClone);
             page.content.appendChild(bodyDiv);
-            //const exitDiv = document.createElement('div');
-            //exitDiv.dataset.exitDiv = 'true';
-            //page.content.appendChild(exitDiv);
             container.appendChild(page);
             fragment.appendChild(container);
         }
