@@ -21,7 +21,7 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
             rowTransform, pageSize,
             beIntersectional, minItemHeight
     }: this): void {
-        const pages = Math.floor(totalRows / pageSize);
+        const pages = Math.ceil(totalRows / pageSize);
         const minHeight = minItemHeight * pageSize;
         const templHeight = (minItemHeight + 0.1) * pageSize;
         const fragment = document.createDocumentFragment();
@@ -56,24 +56,24 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
     }
 
 
-    doTransform(row: number, el: HTMLElement){
-        let dtr: DTR | undefined = undefined;
-        const {list} = this;
-        if(!this.#ctsMap.has(el)){
-            const {rowTransform, rowTransformPlugins} = this;
-            const ctx: RenderContext = {
-                match: rowTransform,
-                plugins: rowTransformPlugins,
-            };
-            const dtr = new DTR(ctx);
-            this.#ctsMap.set(el, dtr);
-        }
-        if(dtr === undefined){
-            dtr = this.#ctsMap.get(el)!;
-        }
-        dtr.ctx.host = list[row];
-        return el;
-    }
+    // doTransform(row: number, el: HTMLElement){
+    //     let dtr: DTR | undefined = undefined;
+    //     const {list} = this;
+    //     if(!this.#ctsMap.has(el)){
+    //         const {rowTransform, rowTransformPlugins} = this;
+    //         const ctx: RenderContext = {
+    //             match: rowTransform,
+    //             plugins: rowTransformPlugins,
+    //         };
+    //         const dtr = new DTR(ctx);
+    //         this.#ctsMap.set(el, dtr);
+    //     }
+    //     if(dtr === undefined){
+    //         dtr = this.#ctsMap.get(el)!;
+    //     }
+    //     dtr.ctx.host = list[row];
+    //     return el;
+    // }
 
 
 

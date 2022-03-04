@@ -1,6 +1,5 @@
 import { CE } from 'trans-render/lib/CE.js';
 import { TemplMgmt, beTransformed } from 'trans-render/lib/mixins/TemplMgmt.js';
-import { DTR } from 'trans-render/lib/DTR.js';
 import('be-deslotted/be-deslotted.js');
 import('be-intersectional/be-intersectional.js');
 import('be-repeated/be-repeated.js');
@@ -14,7 +13,7 @@ export class XtalVList extends HTMLElement {
         };
     }
     createVirtualList({ totalRows, rowTemplate, rowTransform, pageSize, beIntersectional, minItemHeight }) {
-        const pages = Math.floor(totalRows / pageSize);
+        const pages = Math.ceil(totalRows / pageSize);
         const minHeight = minItemHeight * pageSize;
         const templHeight = (minItemHeight + 0.1) * pageSize;
         const fragment = document.createDocumentFragment();
@@ -47,24 +46,24 @@ export class XtalVList extends HTMLElement {
         const container = this.containerParts[0].deref();
         container.appendChild(fragment);
     }
-    doTransform(row, el) {
-        let dtr = undefined;
-        const { list } = this;
-        if (!this.#ctsMap.has(el)) {
-            const { rowTransform, rowTransformPlugins } = this;
-            const ctx = {
-                match: rowTransform,
-                plugins: rowTransformPlugins,
-            };
-            const dtr = new DTR(ctx);
-            this.#ctsMap.set(el, dtr);
-        }
-        if (dtr === undefined) {
-            dtr = this.#ctsMap.get(el);
-        }
-        dtr.ctx.host = list[row];
-        return el;
-    }
+    // doTransform(row: number, el: HTMLElement){
+    //     let dtr: DTR | undefined = undefined;
+    //     const {list} = this;
+    //     if(!this.#ctsMap.has(el)){
+    //         const {rowTransform, rowTransformPlugins} = this;
+    //         const ctx: RenderContext = {
+    //             match: rowTransform,
+    //             plugins: rowTransformPlugins,
+    //         };
+    //         const dtr = new DTR(ctx);
+    //         this.#ctsMap.set(el, dtr);
+    //     }
+    //     if(dtr === undefined){
+    //         dtr = this.#ctsMap.get(el)!;
+    //     }
+    //     dtr.ctx.host = list[row];
+    //     return el;
+    // }
     onRowHTML({ rowHTML }) {
         const rowTemplate = document.createElement('template');
         rowTemplate.innerHTML = rowHTML;

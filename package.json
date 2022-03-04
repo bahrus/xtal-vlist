@@ -10,17 +10,22 @@
     "custom elements",
     "custom element"
   ],
+  "watch": {
+    "build-manifest": "types.d.ts"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "npm-watch",
     "serve": "node node_modules/xtal-test/serve.js",
-    "package-check": "package-check"
+    "package-check": "package-check",
+    "build-manifest": "node doc.mjs > custom-elements.json"
   },
   "dependencies": {
     "trans-render": "0.0.504",
     "xtal-element": "0.0.482",
     "be-deslotted": "0.0.21",
     "be-intersectional": "0.0.32",
-    "be-repeated": "0.0.55"
+    "be-repeated": "0.0.56"
   },
   "devDependencies": {
     "xtal-test": "0.0.55",
@@ -28,7 +33,9 @@
     "xtal-tree": "0.0.76",
     "be-reformable": "0.0.32",
     "be-channeling": "0.0.3",
-    "be-observant": "0.0.99"
+    "be-observant": "0.0.99",
+    "may-it-be": "0.0.141",
+    "npm-watch": "0.11.0"
   },
   "exports": {
     ".": "./xtal-vlist.js",
