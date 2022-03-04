@@ -6,8 +6,6 @@ import 'be-intersectional/be-intersectional.js';
 import 'be-repeated/be-repeated.js';
 export class XtalVList extends HTMLElement {
     #ctsMap = new WeakMap();
-    heightenerParts;
-    scrollerParts;
     containerParts;
     onList({ list }) {
         return {
@@ -128,8 +126,6 @@ const ce = new CE({
 </style>
             `,
             transform: {
-                heightenerParts: true,
-                scrollerParts: true,
                 containerParts: true,
             }
         },

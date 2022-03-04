@@ -9,8 +9,6 @@ import 'be-repeated/be-repeated.js';
 
 export class XtalVList extends HTMLElement implements XtalVlistActions{
     #ctsMap = new WeakMap<HTMLElement, DTR>();
-    heightenerParts!: WeakRef<HTMLDivElement>[];
-    scrollerParts!: WeakRef<HTMLDivElement>[];
     containerParts!: WeakRef<HTMLDivElement>[];
     onList({list}: this){
         return {
@@ -142,8 +140,6 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
 </style>
             `,
             transform: {
-                heightenerParts: true,
-                scrollerParts: true,
                 containerParts: true,
             }
         },
