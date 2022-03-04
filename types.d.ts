@@ -8,10 +8,6 @@ export interface XtalVlistProps{
     isC: boolean,
     topIndex: number,
     containerScrollTop: number,
-    //virtualList: VirtualList,
-    lastFocusId: string,
-    focusId: string,
-    doTransform: any | any[],
     rowTransform: any,
     rowTransformPlugins: TransformPlugins,
     list: any[];
