@@ -17,10 +17,10 @@
   },
   "dependencies": {
     "virtualized-list": "2.2.0",
-    "trans-render": "0.0.502",
+    "trans-render": "0.0.504",
     "xtal-element": "0.0.482",
     "be-deslotted": "0.0.21",
-    "be-intersectional": "0.0.31",
+    "be-intersectional": "0.0.32",
     "be-repeated": "0.0.55"
   },
   "devDependencies": {
