@@ -21,17 +21,13 @@ export class XtalVList extends HTMLElement {
         const templ = html `
 <div class=page>
     <template be-intersectional='${beIntersectionalAttr}'>
+        <div class=rowContainer></div>
+    </template>
 </div>
         `;
         for (let i = 0; i < pages; i++) {
-            const container = document.createElement('div');
-            container.classList.add('page');
-            const page = document.createElement('template');
-            page.setAttribute('be-intersectional', beIntersectionalAttr);
-            //page.dataset.vlistIdx = i.toString();
-            const bodyDiv = document.createElement('div');
-            //bodyDiv.dataset.vlistIdx = i.toString();
-            //bodyDiv.dataset.bodyDiv = 'true';
+            const container = templ.content.cloneNode(true);
+            const bodyDiv = container.querySelector('template').content.querySelector('.rowContainer');
             const lBound = i * pageSize;
             const uBound = lBound + pageSize;
             const beRepeatedArgs = {
@@ -43,8 +39,6 @@ export class XtalVList extends HTMLElement {
             const rowTemplateClone = rowTemplate.cloneNode(true);
             rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
             bodyDiv.appendChild(rowTemplateClone);
-            page.content.appendChild(bodyDiv);
-            container.appendChild(page);
             fragment.appendChild(container);
         }
         const container = this.containerParts[0].deref();
