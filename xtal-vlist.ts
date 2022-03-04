@@ -83,13 +83,8 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
         dtr.ctx.host = list[row];
         return el;
     }
-    generate(row: number) : HTMLElement{
-        const {rowTemplate} = this;
-        const clone = rowTemplate.content.cloneNode(true) as HTMLElement;
-        return clone.firstChild as HTMLElement;
-    }
-    containerXFormFn(el: HTMLElement){
-    }
+
+
 
     onRowHTML({rowHTML}: this) {
         const rowTemplate = document.createElement('template');
@@ -173,7 +168,6 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
                 ifAllOf: ['newList', 'rowTemplate']
             } ,
             onRowHTML: 'rowHTML',
-            //onScroll: 'containerScrollTop',
         }
     },
     superclass: XtalVList,
