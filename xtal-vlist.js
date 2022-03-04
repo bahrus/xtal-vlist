@@ -16,11 +16,12 @@ export class XtalVList extends HTMLElement {
     createVirtualList({ totalRows, rowTemplate, rowTransform, pageSize, beIntersectional, minItemHeight }) {
         const pages = Math.floor(totalRows / pageSize);
         const minHeight = minItemHeight * pageSize;
+        const templHeight = (minItemHeight + 0.1) * pageSize;
         const fragment = document.createDocumentFragment();
         const beIntersectionalAttr = JSON.stringify(beIntersectional);
         const templS = String.raw `
 <div class=page style="min-height:${minHeight}px;">
-    <template be-intersectional='${beIntersectionalAttr}'>
+    <template style="height:${templHeight}px" be-intersectional='${beIntersectionalAttr}'>
         <div class=rowContainer></div>
     </template>
 </div>
@@ -120,7 +121,6 @@ const ce = new CE({
     }
      template[be-intersectional], template[is-intersectional]{
             display:block;
-            height: 1000px;
     }
     template[be-intersectional].expanded, template[is-intersectional].expanded{
             display:none;
