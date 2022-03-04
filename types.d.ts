@@ -1,9 +1,8 @@
 import {TransformPlugins} from 'trans-render/lib/types';
+import {BeIntersectionalVirtualProps} from 'be-intersectional/types';
 
 export interface XtalVlistProps{
     itemHeight: number,
-    // height: string,
-    // width: string,
     totalRows: number,
     items: any[],
     isC: boolean,
@@ -21,6 +20,7 @@ export interface XtalVlistProps{
     rowHTML: string;
     rowTemplate: HTMLTemplateElement;
     pageSize: number;
+    beIntersectional: Partial<BeIntersectionalVirtualProps>;
 }
 
 export interface XtalVlistActions{

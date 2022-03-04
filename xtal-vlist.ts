@@ -18,19 +18,17 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
     }
     createVirtualList({
             totalRows, rowTemplate,
-            rowTransform, pageSize
+            rowTransform, pageSize,
+            beIntersectional,
     }: this): void {
         const pages = Math.floor(totalRows / pageSize);
         const fragment = document.createDocumentFragment();
+        const beIntersectionalAttr = JSON.stringify(beIntersectional);
         for(let i = 0; i < pages; i++){
             const container = document.createElement('div');
             container.classList.add('iah');
             const page = document.createElement('template');
-            const beIntersectionalArgs = {
-                enterDelay: 16,
-                exitDelay: 32,
-            };
-            page.setAttribute('be-intersectional', JSON.stringify(beIntersectionalArgs));
+            page.setAttribute('be-intersectional', beIntersectionalAttr);
             page.dataset.vlistIdx = i.toString();
             const bodyDiv = document.createElement('div');
             bodyDiv.dataset.vlistIdx = i.toString();
@@ -41,7 +39,6 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
                 list: '.list',
                 lBound,
                 uBound,
-                //debug: true,
                 transform: rowTransform,
             }
             const rowTemplateClone = rowTemplate.cloneNode(true) as HTMLElement;
@@ -100,6 +97,10 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
             pageSize: 100,
             rowTransform: {},
             rowTransformPlugins: {},
+            beIntersectional: {
+                enterDelay: 16,
+                exitDelay: 32,
+            },
             mainTemplate: String.raw`
             <slot style=display:none name=row be-deslotted='{
                 "props": "outerHTML",
@@ -130,7 +131,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
         display:flex;
         flex-direction:column;
     }
-    template[be-intersectionalx], template[be-intersectional], template[is-intersectional]{
+     template[be-intersectional], template[is-intersectional]{
             display:block;
             height: 1000px;
     }
