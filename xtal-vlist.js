@@ -1,7 +1,6 @@
 import { CE } from 'trans-render/lib/CE.js';
 import { TemplMgmt, beTransformed } from 'trans-render/lib/mixins/TemplMgmt.js';
 import { DTR } from 'trans-render/lib/DTR.js';
-import { html } from 'trans-render/lib/html.js';
 import('be-deslotted/be-deslotted.js');
 import('be-intersectional/be-intersectional.js');
 import('be-repeated/be-repeated.js');
@@ -18,13 +17,15 @@ export class XtalVList extends HTMLElement {
         const pages = Math.floor(totalRows / pageSize);
         const fragment = document.createDocumentFragment();
         const beIntersectionalAttr = JSON.stringify(beIntersectional);
-        const templ = html `
+        const templS = String.raw `
 <div class=page>
     <template be-intersectional='${beIntersectionalAttr}'>
         <div class=rowContainer></div>
     </template>
 </div>
         `;
+        const templ = document.createElement('template');
+        templ.innerHTML = templS;
         for (let i = 0; i < pages; i++) {
             const container = templ.content.cloneNode(true);
             const bodyDiv = container.querySelector('template').content.querySelector('.rowContainer');
