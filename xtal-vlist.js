@@ -13,8 +13,8 @@ export class XtalVList extends HTMLElement {
             newList: true,
         };
     }
-    createVirtualList({ totalRows, rowTemplate, rowTransform, }) {
-        const pages = Math.floor(totalRows / 100);
+    createVirtualList({ totalRows, rowTemplate, rowTransform, pageSize }) {
+        const pages = Math.floor(totalRows / pageSize);
         const fragment = document.createDocumentFragment();
         for (let i = 0; i < pages; i++) {
             const container = document.createElement('div');
@@ -29,8 +29,8 @@ export class XtalVList extends HTMLElement {
             const bodyDiv = document.createElement('div');
             bodyDiv.dataset.vlistIdx = i.toString();
             bodyDiv.dataset.bodyDiv = 'true';
-            const lBound = i * 100;
-            const uBound = lBound + 100;
+            const lBound = i * pageSize;
+            const uBound = lBound + pageSize;
             const beRepeatedArgs = {
                 list: '.list',
                 lBound,
@@ -83,6 +83,7 @@ const ce = new CE({
             isC: true,
             rowHTML: '',
             containerScrollTop: 0,
+            pageSize: 100,
             rowTransform: {},
             rowTransformPlugins: {},
             mainTemplate: String.raw `

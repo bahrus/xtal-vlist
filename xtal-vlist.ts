@@ -18,9 +18,9 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
     }
     createVirtualList({
             totalRows, rowTemplate,
-            rowTransform,
+            rowTransform, pageSize
     }: this): void {
-        const pages = Math.floor(totalRows / 100);
+        const pages = Math.floor(totalRows / pageSize);
         const fragment = document.createDocumentFragment();
         for(let i = 0; i < pages; i++){
             const container = document.createElement('div');
@@ -35,8 +35,8 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
             const bodyDiv = document.createElement('div');
             bodyDiv.dataset.vlistIdx = i.toString();
             bodyDiv.dataset.bodyDiv = 'true';
-            const lBound = i*100;
-            const uBound = lBound + 100;
+            const lBound = i * pageSize;
+            const uBound = lBound + pageSize;
             const beRepeatedArgs = {
                 list: '.list',
                 lBound,
@@ -97,6 +97,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
             isC: true,
             rowHTML: '',
             containerScrollTop: 0,
+            pageSize: 100,
             rowTransform: {},
             rowTransformPlugins: {},
             mainTemplate: String.raw`

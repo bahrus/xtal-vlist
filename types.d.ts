@@ -20,7 +20,7 @@ export interface XtalVlistProps{
     lastScrollPos: number;
     rowHTML: string;
     rowTemplate: HTMLTemplateElement;
-    
+    pageSize: number;
 }
 
 export interface XtalVlistActions{
