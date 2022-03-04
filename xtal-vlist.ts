@@ -3,9 +3,10 @@ import {CE} from 'trans-render/lib/CE.js';
 import {TemplMgmt, beTransformed, TemplMgmtProps} from 'trans-render/lib/mixins/TemplMgmt.js';
 import {RenderContext} from 'trans-render/lib/types';
 import {DTR} from 'trans-render/lib/DTR.js';
-import 'be-deslotted/be-deslotted.js';
-import 'be-intersectional/be-intersectional.js';
-import 'be-repeated/be-repeated.js';
+import {html} from 'trans-render/lib/html.js';
+import('be-deslotted/be-deslotted.js');
+import('be-intersectional/be-intersectional.js');
+import('be-repeated/be-repeated.js');
 
 export class XtalVList extends HTMLElement implements XtalVlistActions{
     #ctsMap = new WeakMap<HTMLElement, DTR>();
@@ -24,15 +25,20 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
         const pages = Math.floor(totalRows / pageSize);
         const fragment = document.createDocumentFragment();
         const beIntersectionalAttr = JSON.stringify(beIntersectional);
+        const templ = html`
+<div class=page>
+    <template be-intersectional='${beIntersectionalAttr}'>
+</div>
+        `;
         for(let i = 0; i < pages; i++){
             const container = document.createElement('div');
             container.classList.add('page');
             const page = document.createElement('template');
             page.setAttribute('be-intersectional', beIntersectionalAttr);
-            page.dataset.vlistIdx = i.toString();
+            //page.dataset.vlistIdx = i.toString();
             const bodyDiv = document.createElement('div');
-            bodyDiv.dataset.vlistIdx = i.toString();
-            bodyDiv.dataset.bodyDiv = 'true';
+            //bodyDiv.dataset.vlistIdx = i.toString();
+            //bodyDiv.dataset.bodyDiv = 'true';
             const lBound = i * pageSize;
             const uBound = lBound + pageSize;
             const beRepeatedArgs = {
