@@ -5,6 +5,7 @@ export interface XtalVlistProps{
     itemHeight: number,
     totalRows: number,
     items: any[],
+    minItemHeight: number,
     isC: boolean,
     topIndex: number,
     containerScrollTop: number,
