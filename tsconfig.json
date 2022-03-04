@@ -5,11 +5,10 @@
 		"sourceMap": false,
 		"experimentalDecorators": false,
 		"newLine": "LF",
-		"strict": false,
+		"strict": true,
 		"watch": true
 	},
 	"files": [
-		"vlist.ts",
 		"xtal-vlist.ts",
 	],
 	"exclude":[

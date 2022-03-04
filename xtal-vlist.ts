@@ -19,8 +19,7 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
         }
     }
     createVirtualList({
-            totalRows, isC, topIndex, itemHeight,
-            rowXFormFn, containerXFormFn, shadowRoot, heightenerParts, rowTemplate,
+            totalRows, rowTemplate,
             rowTransform,
     }: this): void {
         //heightenerParts![0].deref().style.height = totalRows * itemHeight + 'px';
@@ -65,10 +64,7 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
         container.appendChild(fragment);
     }
 
-    rowXFormFn = async (el: HTMLElement, x: any) => {
-        const dtr = this.#ctsMap.get(el);
-        await dtr.transform(el);
-    }
+
     doTransform(row: number, el: HTMLElement){
         let dtr: DTR | undefined = undefined;
         const {list} = this;

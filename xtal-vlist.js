@@ -15,7 +15,7 @@ export class XtalVList extends HTMLElement {
             newList: true,
         };
     }
-    createVirtualList({ totalRows, isC, topIndex, itemHeight, rowXFormFn, containerXFormFn, shadowRoot, heightenerParts, rowTemplate, rowTransform, }) {
+    createVirtualList({ totalRows, rowTemplate, rowTransform, }) {
         //heightenerParts![0].deref().style.height = totalRows * itemHeight + 'px';
         const pages = Math.floor(totalRows / 100);
         const fragment = document.createDocumentFragment();
@@ -57,10 +57,6 @@ export class XtalVList extends HTMLElement {
         const container = this.containerParts[0].deref();
         container.appendChild(fragment);
     }
-    rowXFormFn = async (el, x) => {
-        const dtr = this.#ctsMap.get(el);
-        await dtr.transform(el);
-    };
     doTransform(row, el) {
         let dtr = undefined;
         const { list } = this;
