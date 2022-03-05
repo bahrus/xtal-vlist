@@ -8,7 +8,7 @@ xtal-vlist provides a declarative "infinite scrolling" virtual list web componen
 
 [Demo](https://codepen.io/bahrus/pen/yLPjMER)
 
-
+## [API](https://cf-sw.bahrus.workers.dev/?href=https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fxtal-vlist%2Fcustom-elements.json&stylesheet=https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fwc-info%2Fsimple-ce-style.css&embedded=false&tags=&ts=2022-03-05T11%3A08%3A36.018Z&tocXSLT=https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fwc-info%2Ftoc.xsl)
 
 ## Example
 
