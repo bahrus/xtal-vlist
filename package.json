@@ -21,7 +21,7 @@
     "build-manifest": "node doc.mjs > custom-elements.json"
   },
   "dependencies": {
-    "trans-render": "0.0.504",
+    "trans-render": "0.0.507",
     "xtal-element": "0.0.482",
     "be-deslotted": "0.0.21",
     "be-intersectional": "0.0.32",
