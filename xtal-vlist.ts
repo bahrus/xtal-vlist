@@ -65,6 +65,11 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
             rowTemplate
         }
     }
+
+    onRowStyle({rowStyle, shadowRoot}: this) {
+        console.log({rowStyle, shadowRoot});
+        shadowRoot!.appendChild(rowStyle.cloneNode(true));
+    }
 }
 
 export interface XtalVList extends XtalVlistProps{}
@@ -87,6 +92,10 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
                 exitDelay: 32,
             },
             mainTemplate: String.raw`
+            <slot style=display:none name=style be-deslotted='{
+                "props": "content",
+                "propMap": {"content": "rowStyle"}
+            }'></slot>
             <slot style=display:none name=row be-deslotted='{
                 "props": "outerHTML",
                 "propMap": {"outerHTML": "rowHTML"}
@@ -131,6 +140,9 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
         propInfo: {
             newList: {
                 dry: false,
+            },
+            rowStyle: {
+                parse: false,
             }
         },
         actions:{
@@ -142,6 +154,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
                 ifAllOf: ['newList', 'rowTemplate']
             } ,
             onRowHTML: 'rowHTML',
+            onRowStyle: 'rowStyle',
         }
     },
     superclass: XtalVList,
