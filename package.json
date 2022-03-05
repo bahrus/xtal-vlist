@@ -1,6 +1,6 @@
 {
   "name": "xtal-vlist",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "xtal-vlist provides a declarative virtual list web component",
   "module": "xtal-vlist.js",
   "main": "xtal-vlist.js",
