@@ -4,7 +4,7 @@ import('be-deslotted/be-deslotted.js');
 import('be-intersectional/be-intersectional.js');
 import('be-repeated/be-repeated.js');
 export class XtalVList extends HTMLElement {
-    #ctsMap = new WeakMap();
+    //#ctsMap = new WeakMap<HTMLElement, DTR>();
     #previousPageNo = 0;
     containerParts;
     onList({ list }) {
@@ -38,6 +38,7 @@ export class XtalVList extends HTMLElement {
                 lBound,
                 uBound,
                 transform: rowTransform,
+                debug: true
             };
             const rowTemplateClone = rowTemplate.cloneNode(true);
             rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));

@@ -8,7 +8,7 @@ import('be-intersectional/be-intersectional.js');
 import('be-repeated/be-repeated.js');
 
 export class XtalVList extends HTMLElement implements XtalVlistActions{
-    #ctsMap = new WeakMap<HTMLElement, DTR>();
+    //#ctsMap = new WeakMap<HTMLElement, DTR>();
     #previousPageNo: number = 0;
     containerParts!: WeakRef<HTMLDivElement>[];
     onList({list}: this){
@@ -46,6 +46,7 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
                 lBound,
                 uBound,
                 transform: rowTransform,
+                debug: true
             }
             const rowTemplateClone = rowTemplate.cloneNode(true) as HTMLElement;
             rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
