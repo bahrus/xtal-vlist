@@ -24,13 +24,19 @@
             </style>
         </template>
     </xtal-vlist>
+    <button onclick="shrinkList()">Shrink List</button>
     <script>
         const list = [];
-        for (let i = 0; i < 100000; i++) {
+        for (let i = 0; i < 1000; i++) {
             list.push(i);
         }
         vlist.list = list;
+
+        function shrinkList() {
+            vlist.list = list.slice(0, 300);
+        }
     </script>
+
     <script type=importmap>
     {
         "imports": {

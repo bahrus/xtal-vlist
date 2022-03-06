@@ -11,6 +11,7 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
     //#ctsMap = new WeakMap<HTMLElement, DTR>();
     #previousPageNo: number = 0;
     containerParts!: WeakRef<HTMLDivElement>[];
+    #pageContainers: {[key: number]: WeakRef<HTMLDivElement>} = {};
     onList({list}: this){
         return {
             totalRows: list.length,
@@ -25,7 +26,7 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
         const pages = Math.ceil(totalRows / pageSize);
         const minHeight = minItemHeight * pageSize;
         const templHeight = (minItemHeight + 0.1) * pageSize;
-        const fragment = document.createDocumentFragment();
+        
         const beIntersectionalAttr = JSON.stringify(beIntersectional);
         const templS = String.raw`
 <div class=page style="min-height:${minHeight}px;">
@@ -34,29 +35,40 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
     </template>
 </div>
         `;
-        const templ = document.createElement('template');
-        templ.innerHTML = templS;
-        for(let i = this.#previousPageNo; i < pages; i++){
-            const container = templ.content.cloneNode(true) as HTMLDivElement;
-            const bodyDiv = container.querySelector('template')!.content.querySelector('.rowContainer')!;
-            const lBound = i * pageSize;
-            const uBound = lBound + pageSize;
-            const beRepeatedArgs = {
-                list: '.list',
-                lBound,
-                uBound,
-                transform: rowTransform,
-                debug: true
+        const pageTempl = document.createElement('template');
+        pageTempl.innerHTML = templS;
+        if(pages > this.#previousPageNo){
+            const fragment = document.createDocumentFragment();
+            for(let i = this.#previousPageNo; i < pages; i++){
+                const pageContainer = pageTempl.content.cloneNode(true) as HTMLDivElement;
+                this.#pageContainers[i] = new WeakRef(pageContainer.firstElementChild as HTMLDivElement);
+                const bodyDiv = pageContainer.querySelector('template')!.content.querySelector('.rowContainer')!;
+                const lBound = i * pageSize;
+                const uBound = lBound + pageSize;
+                const beRepeatedArgs = {
+                    list: '.list',
+                    lBound,
+                    uBound,
+                    transform: rowTransform,
+                    debug: true
+                }
+                const rowTemplateClone = rowTemplate.cloneNode(true) as HTMLElement;
+                rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
+                bodyDiv.appendChild(rowTemplateClone);
+                fragment.appendChild(pageContainer);
+                this.#previousPageNo = i + 1;
             }
-            const rowTemplateClone = rowTemplate.cloneNode(true) as HTMLElement;
-            rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
-            bodyDiv.appendChild(rowTemplateClone);
-            fragment.appendChild(container);
-            this.#previousPageNo = i + 1;
+            const container = this.containerParts[0].deref()!;
+            container.appendChild(fragment);
+        }else{
+            for(let i = pages; i < this.#previousPageNo; i++){
+                const pageContainer = this.#pageContainers[i].deref()!;
+                pageContainer.remove();
+            }
         }
+
         
-        const container = this.containerParts[0].deref()!;
-        container.appendChild(fragment);
+        
     }
 
     onRowHTML({rowHTML}: this) {
