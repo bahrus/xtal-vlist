@@ -64,7 +64,9 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
             for(let i = pages; i < this.#previousPageNo; i++){
                 const pageContainer = this.#pageContainers[i].deref();
                 if(pageContainer !== undefined) pageContainer.remove();
+                
             }
+            this.#previousPageNo = pages;
         }
 
         

@@ -58,6 +58,7 @@ export class XtalVList extends HTMLElement {
                 if (pageContainer !== undefined)
                     pageContainer.remove();
             }
+            this.#previousPageNo = pages;
         }
     }
     onRowHTML({ rowHTML }) {
