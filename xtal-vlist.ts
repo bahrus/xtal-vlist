@@ -80,7 +80,6 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
     }
 
     onRowStyle({rowStyle, shadowRoot}: this) {
-        console.log({rowStyle, shadowRoot});
         shadowRoot!.appendChild(rowStyle.cloneNode(true));
     }
 }

@@ -68,7 +68,6 @@ export class XtalVList extends HTMLElement {
         };
     }
     onRowStyle({ rowStyle, shadowRoot }) {
-        console.log({ rowStyle, shadowRoot });
         shadowRoot.appendChild(rowStyle.cloneNode(true));
     }
 }
