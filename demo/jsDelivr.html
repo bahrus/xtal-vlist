@@ -7,24 +7,114 @@
     <title>Document</title>
 </head>
 <body>
-    <xtal-vlist id="vlist"
-        row-transform='{
-            "span": "."
-        }'
+    <button id="btn">hello</button>
+    <form be-reformable='{
+        "autoSubmit": true,
+        "debug": true
+    }'
+
+        target="[-nodes]"
+        action="https://cdn.jsdelivr.com/xtal-vlist/demo/xtal-tree/directory.json"
     >
-        <div slot=row>
-            <span></span>
-        </div>
-    </xtal-vlist>
-    <script>
-        const list = [];
-        for (let i = 0; i < 100000; i++) {
-            list.push(i);
+    </form>
+    <button be-noticed='{
+        "click": {
+            "to": "/xtal-tree",
+            "prop": "collapseAll",
+            "val": true
         }
-        vlist.list = list;
+    }'>Collapse All</button>
+    <button be-noticed='{
+        "click": {
+            "to": "/xtal-tree",
+            "prop": "expandAll",
+            "val": true
+        }
+    }'>Expand All</button>
+    <button be-noticed='{
+        "click": {
+            "to": "/xtal-tree",
+            "prop": "sort",
+            "val": "asc"
+        }
+    }'>Sort Asc</button>
+    <button be-noticed='{
+        "click": {
+            "to": "/xtal-tree",
+            "prop": "sort",
+            "val": "desc"
+        }
+    }'>Sort Desc</button>
+    <label>
+        Search
+        <input type="search" be-noticed='{
+            "input": {
+                "to": "/xtal-tree",
+                "doInit": true,
+                "vft": "value",
+                "prop": "searchString"
+            }
+        }'>
+    </label>
+    <xtal-tree id="xtal-tree" -nodes id-path="path"></xtal-tree>
+
+    <xtal-vlist style="height:600px;width:100%;" page-size="10" id="vlist" be-observant='{
+        "list": {"observe": "xtal-tree", "vft": "viewableNodes"}
+    }' row-transform='{
+        "div": [{}, {}, {"data-path": "path", "style": "marginStyle"}],
+        "label": "name",
+        "expanderParts": [true, {"if": "open"}, ["-"], ["+"]],
+        "button": [{}, {}, {"data-children": "hasChildren"}]
+    }'
+        be-channeling='{
+            "eventFilter": "click",
+            "toNearestUpMatch": "xtal-tree",
+            "prop": "toggledNodeId",
+            "vfe": "path.0.parentElement.dataset.path",
+            "composedPathMatch": "button"
+        }'
+    >>
+        <div class=node slot=row itemscope >
+            <button class="expander" part=expander>.</button>
+            <label></label>
+        </div>
+        <template slot="style">
+            <style>
+                button.expander{
+                    display:none;
+                }
+                button[data-children].expander{
+                    display:inline;
+                }
+            </style>
+        </template>
+    </xtal-vlist>
+    <script type=importmap>
+        {
+            "imports": {
+                "trans-render/": "../../node_modules/trans-render/",
+                "xtal-element/": "../../node_modules/xtal-element/",
+                "be-decorated/": "../../node_modules/be-decorated/",
+                "be-deslotted/": "../../node_modules/be-deslotted/",
+                "be-noticed/": "../../node_modules/be-noticed/",
+                "be-channeling/": "../../node_modules/be-channeling/",
+                "be-observant/": "../../node_modules/be-observant/",
+                "be-reformable/": "../../node_modules/be-reformable/",
+                "on-to-me/": "../../node_modules/on-to-me/",
+                "be-hive/": "../../node_modules/be-hive/",
+                "xtal-tree/": "../../node_modules/xtal-tree/",
+                "be-intersectional/": "../../node_modules/be-intersectional/",
+                "be-repeated/": "../../node_modules/be-repeated/"
+            }
+        }
     </script>
     <script type=module>
+        import 'https://esm.run/be-reformable/be-reformable.js';
+        import 'https://esm.run/xtal-tree/xtal-tree.js';
         import 'https://esm.run/xtal-vlist/xtal-vlist.js';
+        import 'https://esm.run/be-observant/be-observant.js';
+        import 'https://esm.run/be-noticed/be-noticed.js';
+        import 'https://esm.run/be-channeling/be-channeling.js';
     </script>
 </body>
 </html>

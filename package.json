@@ -30,17 +30,16 @@
   "devDependencies": {
     "xtal-test": "0.0.55",
     "@skypack/package-check": "0.2.2",
-    "xtal-tree": "0.0.77",
+    "xtal-tree": "0.0.78",
     "be-reformable": "0.0.32",
-    "be-channeling": "0.0.3",
+    "be-channeling": "0.0.4",
     "be-observant": "0.0.100",
     "may-it-be": "0.0.141",
     "npm-watch": "0.11.0"
   },
   "exports": {
     ".": "./xtal-vlist.js",
-    "./xtal-vlist.js": "./xtal-vlist.js",
-    "./vlist.js": "./vlist.js"
+    "./xtal-vlist.js": "./xtal-vlist.js"
   },
   "files": [
     "*.*"
