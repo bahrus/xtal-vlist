@@ -55,7 +55,8 @@ export class XtalVList extends HTMLElement {
         else {
             for (let i = pages; i < this.#previousPageNo; i++) {
                 const pageContainer = this.#pageContainers[i].deref();
-                pageContainer.remove();
+                if (pageContainer !== undefined)
+                    pageContainer.remove();
             }
         }
     }

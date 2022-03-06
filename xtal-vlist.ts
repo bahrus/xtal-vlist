@@ -62,8 +62,8 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
             container.appendChild(fragment);
         }else{
             for(let i = pages; i < this.#previousPageNo; i++){
-                const pageContainer = this.#pageContainers[i].deref()!;
-                pageContainer.remove();
+                const pageContainer = this.#pageContainers[i].deref();
+                if(pageContainer !== undefined) pageContainer.remove();
             }
         }
 
