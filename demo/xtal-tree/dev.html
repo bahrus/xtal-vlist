@@ -17,13 +17,54 @@
         action="directory.json"
     >
     </form>
+    <button be-noticed='{
+        "click": {
+            "to": "/xtal-tree",
+            "prop": "collapseAll",
+            "val": true
+        }
+    }'>Collapse All</button>
+    <button be-noticed='{
+        "click": {
+            "to": "/xtal-tree",
+            "prop": "expandAll",
+            "val": true
+        }
+    }'>Expand All</button>
+    <button be-noticed='{
+        "click": {
+            "to": "/xtal-tree",
+            "prop": "sort",
+            "val": "asc"
+        }
+    }'>Sort Asc</button>
+    <button be-noticed='{
+        "click": {
+            "to": "/xtal-tree",
+            "prop": "sort",
+            "val": "desc"
+        }
+    }'>Sort Desc</button>
+    <label>
+        Search
+        <input type="search" be-noticed='{
+            "input": {
+                "to": "/xtal-tree",
+                "doInit": true,
+                "vft": "value",
+                "prop": "searchString"
+            }
+        }'>
+    </label>
     <xtal-tree id="xtal-tree" -nodes id-path="path"></xtal-tree>
-    <xtal-vlist page-size="10" id="vlist" be-observant='{
+
+    <xtal-vlist style="height:600px;width:100%;" page-size="10" id="vlist" be-observant='{
         "list": {"observe": "xtal-tree", "vft": "viewableNodes"}
     }' row-transform='{
         "div": [{}, {}, {"data-path": "path", "style": "marginStyle"}],
         "label": "name",
-        "expanderParts": [true, {"if": "open"}, ["-"], ["+"]]
+        "expanderParts": [true, {"if": "open"}, ["-"], ["+"]],
+        "button": [{}, {}, {"data-children": "hasChildren"}]
     }'
         be-channeling='{
             "eventFilter": "click",
@@ -33,10 +74,20 @@
             "composedPathMatch": "button"
         }'
     >>
-        <div class=node slot=row>
-            <button part=expander>.</button>
+        <div class=node slot=row itemscope >
+            <button class="expander" part=expander>.</button>
             <label></label>
         </div>
+        <template slot="style">
+            <style>
+                button.expander{
+                    display:none;
+                }
+                button[data-children].expander{
+                    display:inline;
+                }
+            </style>
+        </template>
     </xtal-vlist>
     <script type=importmap>
         {
@@ -58,7 +109,7 @@
     </script>
     <script type=module>
         import 'be-reformable/be-reformable.js';
-        import 'xtal-tree/xtal-tree2.js';
+        import 'xtal-tree/xtal-tree.js';
         import '../../xtal-vlist.js';
         import 'be-observant/be-observant.js';
         import 'be-channeling/be-channeling.js';

@@ -21,7 +21,7 @@
     "build-manifest": "node doc.mjs > custom-elements.json"
   },
   "dependencies": {
-    "trans-render": "0.0.507",
+    "trans-render": "0.0.510",
     "xtal-element": "0.0.482",
     "be-deslotted": "0.0.21",
     "be-intersectional": "0.0.33",
@@ -30,7 +30,7 @@
   "devDependencies": {
     "xtal-test": "0.0.55",
     "@skypack/package-check": "0.2.2",
-    "xtal-tree": "0.0.76",
+    "xtal-tree": "0.0.77",
     "be-reformable": "0.0.32",
     "be-channeling": "0.0.3",
     "be-observant": "0.0.99",
