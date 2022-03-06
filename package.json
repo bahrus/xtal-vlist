@@ -25,7 +25,7 @@
     "xtal-element": "0.0.482",
     "be-deslotted": "0.0.21",
     "be-intersectional": "0.0.32",
-    "be-repeated": "0.0.61"
+    "be-repeated": "0.0.62"
   },
   "devDependencies": {
     "xtal-test": "0.0.55",
