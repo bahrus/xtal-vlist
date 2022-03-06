@@ -41,7 +41,7 @@ export class XtalVList extends HTMLElement {
                     lBound,
                     uBound,
                     transform: rowTransform,
-                    debug: true
+                    //debug: true
                 };
                 const rowTemplateClone = rowTemplate.cloneNode(true);
                 rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));

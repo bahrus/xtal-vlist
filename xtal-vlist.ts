@@ -50,7 +50,7 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
                     lBound,
                     uBound,
                     transform: rowTransform,
-                    debug: true
+                    //debug: true
                 }
                 const rowTemplateClone = rowTemplate.cloneNode(true) as HTMLElement;
                 rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
