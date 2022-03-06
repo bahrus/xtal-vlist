@@ -24,7 +24,7 @@
     "trans-render": "0.0.507",
     "xtal-element": "0.0.482",
     "be-deslotted": "0.0.21",
-    "be-intersectional": "0.0.32",
+    "be-intersectional": "0.0.33",
     "be-repeated": "0.0.63"
   },
   "devDependencies": {
