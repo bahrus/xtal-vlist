@@ -57,7 +57,7 @@
     </label>
     <xtal-tree id="xtal-tree" -nodes id-path="path"></xtal-tree>
 
-    <xtal-vlist style="height:600px;width:100%;" page-size="10" id="vlist" be-observant='{
+    <xtal-vlist style="height:600px;width:100%;" page-size="10" id="vlist" min-item-height='19' be-observant='{
         "list": {"observe": "xtal-tree", "vft": "viewableNodes"}
     }' row-transform='{
         "div": [{}, {}, {"data-path": "path", "style": "marginStyle"}],

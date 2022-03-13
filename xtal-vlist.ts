@@ -114,6 +114,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
                 "props": "outerHTML",
                 "propMap": {"outerHTML": "rowHTML"}
             }'></slot>
+            <slot name=header></slot>
             <div class=scroller part=scroller>
                 <div class=container part=container></div>
             </div>

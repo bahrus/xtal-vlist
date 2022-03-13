@@ -98,6 +98,7 @@ const ce = new CE({
                 "props": "outerHTML",
                 "propMap": {"outerHTML": "rowHTML"}
             }'></slot>
+            <slot name=header></slot>
             <div class=scroller part=scroller>
                 <div class=container part=container></div>
             </div>
