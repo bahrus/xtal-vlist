@@ -14,11 +14,11 @@ export class XtalVList extends HTMLElement {
             newList: true,
         };
     }
-    createVirtualList({ totalRows, rowTemplate, rowTransform, pageSize, beIntersectional, minItemHeight }) {
+    createVirtualList({ totalRows, rowTemplate, rowTransform, pageSize, rowIntersectionalSettings, minItemHeight }) {
         const pages = Math.ceil(totalRows / pageSize);
         const minHeight = minItemHeight * pageSize;
         const templHeight = (minItemHeight + 0.1) * pageSize;
-        const beIntersectionalAttr = JSON.stringify(beIntersectional);
+        const beIntersectionalAttr = JSON.stringify(rowIntersectionalSettings);
         const templS = String.raw `
 <div class=page style="min-height:${minHeight}px;">
     <template style="height:${templHeight}px" be-intersectional='${beIntersectionalAttr}'>
@@ -85,7 +85,7 @@ const ce = new CE({
             pageSize: 100,
             rowTransform: {},
             rowTransformPlugins: {},
-            beIntersectional: {
+            rowIntersectionalSettings: {
                 enterDelay: 16,
                 exitDelay: 32,
             },

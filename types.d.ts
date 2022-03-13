@@ -19,7 +19,7 @@ export interface XtalVlistProps{
     rowStyle: Node;
     rowTemplate: HTMLTemplateElement;
     pageSize: number;
-    beIntersectional: Partial<BeIntersectionalVirtualProps>;
+    rowIntersectionalSettings: Partial<BeIntersectionalVirtualProps>;
 }
 
 export interface XtalVlistActions{
