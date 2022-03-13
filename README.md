@@ -6,7 +6,26 @@
 
 xtal-vlist provides a declarative "infinite scrolling" virtual list web component.
 
-[Demo](https://codepen.io/bahrus/pen/yLPjMER)
+[Demo 1 -- Simple](https://codepen.io/bahrus/pen/yLPjMER)
+
+[Demo 2 -- Tree View](https://codepen.io/bahrus/pen/GROLwBV)
+
+Note that for Demo 2, if you click expand all, and enable Chrome's Web Vitals dev tool (under rendering tab), there is no Cumulative Layout Shift.
+
+This is done by utilizing the intersectional settings:
+
+```html
+<xtal-vlist ...
+  row-intersectional-settings='{
+    "rootClosest": ".scroller",
+    "options": {
+        "rootMargin": "300px",
+        "threshold": 0
+    }
+}'>
+ ...
+</xtal-vlist>
+```
 
 ## [API](https://cf-sw.bahrus.workers.dev/?href=https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fxtal-vlist%2Fcustom-elements.json&stylesheet=https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fwc-info%2Fsimple-ce-style.css&embedded=false&tags=&ts=2022-03-05T11%3A08%3A36.018Z&tocXSLT=https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fwc-info%2Ftoc.xsl)
 
