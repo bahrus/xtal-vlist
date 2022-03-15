@@ -41,7 +41,6 @@ export class XtalVList extends HTMLElement {
                     lBound,
                     uBound,
                     transform: rowTransform,
-                    //debug: true
                 };
                 const rowTemplateClone = rowTemplate.cloneNode(true);
                 rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
@@ -98,7 +97,6 @@ const ce = new CE({
                 "props": "outerHTML",
                 "propMap": {"outerHTML": "rowHTML"}
             }'></slot>
-            <slot name=header></slot>
             <div class=scroller part=scroller>
                 <div class=container part=container></div>
             </div>

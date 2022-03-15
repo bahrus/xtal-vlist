@@ -1,8 +1,6 @@
 import {XtalVlistActions, XtalVlistProps} from './types';
 import {CE} from 'trans-render/lib/CE.js';
 import {TemplMgmt, beTransformed, TemplMgmtProps} from 'trans-render/lib/mixins/TemplMgmt.js';
-import {RenderContext} from 'trans-render/lib/types';
-import {DTR} from 'trans-render/lib/DTR.js';
 import('be-deslotted/be-deslotted.js');
 import('be-intersectional/be-intersectional.js');
 import('be-repeated/be-repeated.js');
@@ -50,7 +48,6 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
                     lBound,
                     uBound,
                     transform: rowTransform,
-                    //debug: true
                 }
                 const rowTemplateClone = rowTemplate.cloneNode(true) as HTMLElement;
                 rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
@@ -114,7 +111,6 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
                 "props": "outerHTML",
                 "propMap": {"outerHTML": "rowHTML"}
             }'></slot>
-            <slot name=header></slot>
             <div class=scroller part=scroller>
                 <div class=container part=container></div>
             </div>
@@ -180,6 +176,6 @@ export const XtalVListExt = ce.classDef!;
 
 declare global {
     interface HTMLElementTagNameMap {
-        "xtal-vlist": XtalVListExt,
+        "xtal-vlist": XtalVList,
     }
 }
