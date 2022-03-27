@@ -60,15 +60,15 @@ export class XtalVList extends HTMLElement {
             this.#previousPageNo = pages;
         }
     }
-    onRowHTML({ rowHTML }) {
-        const rowTemplate = document.createElement('template');
-        rowTemplate.innerHTML = rowHTML;
-        return {
-            rowTemplate
-        };
-    }
-    onRowStyle({ rowStyle, shadowRoot }) {
-        shadowRoot.appendChild(rowStyle.cloneNode(true));
+    // onRowHTML({rowHTML}: this) {
+    //     const rowTemplate = document.createElement('template');
+    //     rowTemplate.innerHTML = rowHTML;
+    //     return {
+    //         rowTemplate
+    //     }
+    // }
+    onStyleTemplate({ styleTemplate, shadowRoot }) {
+        shadowRoot.appendChild(styleTemplate.content.cloneNode(true));
     }
 }
 const ce = new CE({
@@ -79,7 +79,7 @@ const ce = new CE({
             minItemHeight: 8,
             totalRows: -1,
             isC: true,
-            rowHTML: '',
+            //rowHTML: '',
             containerScrollTop: 0,
             pageSize: 100,
             rowTransform: {},
@@ -90,12 +90,12 @@ const ce = new CE({
             },
             mainTemplate: String.raw `
             <slot style=display:none name=style be-deslotted='{
-                "props": "content",
-                "propMap": {"content": "rowStyle"}
+                "props": ".",
+                "propMap": {".": "styleTemplate"}
             }'></slot>
             <slot style=display:none name=row be-deslotted='{
-                "props": "outerHTML",
-                "propMap": {"outerHTML": "rowHTML"}
+                "props": ".",
+                "propMap": {".": "rowTemplate"}
             }'></slot>
             <div class=scroller part=scroller>
                 <div class=container part=container></div>
@@ -138,7 +138,7 @@ const ce = new CE({
             newList: {
                 dry: false,
             },
-            rowStyle: {
+            rowTemplate: {
                 parse: false,
             }
         },
@@ -150,8 +150,7 @@ const ce = new CE({
             createVirtualList: {
                 ifAllOf: ['newList', 'rowTemplate']
             },
-            onRowHTML: 'rowHTML',
-            onRowStyle: 'rowStyle',
+            onStyleTemplate: 'styleTemplate',
         }
     },
     superclass: XtalVList,

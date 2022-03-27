@@ -81,10 +81,13 @@
             }
         }'
     >>
-        <div class=node slot=row itemscope >
-            <button class="expander" part=expander>.</button>
-            <label></label>
-        </div>
+        <template slot='row'>
+            <div class=node itemscope>
+                <button class="expander" part=expander>.</button>
+                <label></label>
+            </div>
+        </template>
+
         <template slot="style">
             <style>
                 button.expander{

@@ -70,16 +70,16 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
         
     }
 
-    onRowHTML({rowHTML}: this) {
-        const rowTemplate = document.createElement('template');
-        rowTemplate.innerHTML = rowHTML;
-        return {
-            rowTemplate
-        }
-    }
+    // onRowHTML({rowHTML}: this) {
+    //     const rowTemplate = document.createElement('template');
+    //     rowTemplate.innerHTML = rowHTML;
+    //     return {
+    //         rowTemplate
+    //     }
+    // }
 
-    onRowStyle({rowStyle, shadowRoot}: this) {
-        shadowRoot!.appendChild(rowStyle.cloneNode(true));
+    onStyleTemplate({styleTemplate, shadowRoot}: this) {
+        shadowRoot!.appendChild(styleTemplate.content.cloneNode(true));
     }
 }
 
@@ -93,7 +93,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
             minItemHeight: 8,
             totalRows: -1,
             isC: true,
-            rowHTML: '',
+            //rowHTML: '',
             containerScrollTop: 0,
             pageSize: 100,
             rowTransform: {},
@@ -104,12 +104,12 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
             },
             mainTemplate: String.raw`
             <slot style=display:none name=style be-deslotted='{
-                "props": "content",
-                "propMap": {"content": "rowStyle"}
+                "props": ".",
+                "propMap": {".": "styleTemplate"}
             }'></slot>
             <slot style=display:none name=row be-deslotted='{
-                "props": "outerHTML",
-                "propMap": {"outerHTML": "rowHTML"}
+                "props": ".",
+                "propMap": {".": "rowTemplate"}
             }'></slot>
             <div class=scroller part=scroller>
                 <div class=container part=container></div>
@@ -152,7 +152,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
             newList: {
                 dry: false,
             },
-            rowStyle: {
+            rowTemplate: {
                 parse: false,
             }
         },
@@ -164,8 +164,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
             createVirtualList: {
                 ifAllOf: ['newList', 'rowTemplate']
             } ,
-            onRowHTML: 'rowHTML',
-            onRowStyle: 'rowStyle',
+            onStyleTemplate: 'styleTemplate',
         }
     },
     superclass: XtalVList,

@@ -21,14 +21,14 @@
     "build-manifest": "node doc.mjs > custom-elements.json"
   },
   "dependencies": {
-    "trans-render": "0.0.511",
-    "xtal-element": "0.0.484",
-    "be-deslotted": "0.0.23",
-    "be-intersectional": "0.0.37",
+    "trans-render": "0.0.514",
+    "xtal-element": "0.0.485",
+    "be-deslotted": "0.0.24",
+    "be-intersectional": "0.0.43",
     "be-repeated": "0.0.65"
   },
   "devDependencies": {
-    "xtal-test": "0.0.55",
+    "xtal-test": "0.0.56",
     "@skypack/package-check": "0.2.2",
     "xtal-tree": "0.0.79",
     "be-reformable": "0.0.34",

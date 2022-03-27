@@ -37,9 +37,11 @@ This is done by utilizing the intersectional settings:
         "span": "."
     }'
 >
-    <div slot=row>
-        <span></span>
-    </div>
+    <template slot=row>
+        <div>
+            <span></span>
+        </div>
+    </template>
 </xtal-vlist>
 <script>
     const list = [];
