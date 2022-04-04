@@ -123,7 +123,6 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
         display:flex;
         flex-direction:column;
         overflow:auto;
-        border:1px solid black;
         height:inherit;
         width:inherit;
     }

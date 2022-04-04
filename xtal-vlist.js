@@ -109,7 +109,6 @@ const ce = new CE({
         display:flex;
         flex-direction:column;
         overflow:auto;
-        border:1px solid black;
         height:inherit;
         width:inherit;
     }
