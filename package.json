@@ -21,21 +21,21 @@
     "build-manifest": "node doc.mjs > custom-elements.json"
   },
   "dependencies": {
-    "trans-render": "0.0.514",
-    "xtal-element": "0.0.485",
-    "be-deslotted": "0.0.24",
-    "be-intersectional": "0.0.43",
-    "be-repeated": "0.0.65"
+    "trans-render": "0.0.518",
+    "xtal-element": "0.0.486",
+    "be-deslotted": "0.0.25",
+    "be-intersectional": "0.0.45",
+    "be-repeated": "0.0.66"
   },
   "devDependencies": {
     "xtal-test": "0.0.56",
     "@skypack/package-check": "0.2.2",
-    "xtal-tree": "0.0.79",
-    "be-reformable": "0.0.34",
-    "be-channeling": "0.0.5",
-    "be-observant": "0.0.101",
-    "be-noticed": "0.0.57",
-    "may-it-be": "0.0.143",
+    "xtal-tree": "0.0.130",
+    "be-reformable": "0.0.35",
+    "be-channeling": "0.0.8",
+    "be-observant": "0.0.110",
+    "be-noticed": "0.0.58",
+    "may-it-be": "0.0.146",
     "npm-watch": "0.11.0"
   },
   "exports": {
