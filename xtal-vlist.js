@@ -97,7 +97,7 @@ const ce = new CE({
                 "props": ".",
                 "propMap": {".": "rowTemplate"}
             }'></slot>
-            <div class=scroller style="overflow-y:scroll" part=scroller>
+            <div class=scroller part=scroller>
                 <div class=container part=container></div>
             </div>
             </div>
