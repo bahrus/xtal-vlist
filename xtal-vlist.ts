@@ -124,7 +124,6 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
         flex-direction:column;
         overflow-y:scroll;
         overflow-x:auto;
-        max-height:inherit;
         height:inherit;
         width:inherit;
     }
