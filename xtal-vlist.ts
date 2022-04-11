@@ -122,8 +122,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
     .scroller{
         display:flex;
         flex-direction:column;
-        overflow-y:scroll;
-        overflow-x:auto;
+        overflow:auto;
         height:inherit;
         width:inherit;
     }

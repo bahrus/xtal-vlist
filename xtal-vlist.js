@@ -108,8 +108,7 @@ const ce = new CE({
     .scroller{
         display:flex;
         flex-direction:column;
-        overflow-y:scroll;
-        overflow-x:auto;
+        overflow:auto;
         height:inherit;
         width:inherit;
     }
