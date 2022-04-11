@@ -8,11 +8,24 @@
 </head>
 <body>
     <div style='height:600px;background-color:red'>
-        <div style='height:inherit;overflow:auto;background-color: aliceblue;'>
-            <div style='height:20000px;background-color:green'>
-                I am here
+        <template shadowroot='open'>
+            <div style='height:inherit;overflow:auto;background-color: aliceblue;'>
+                <div style='height:20000px;background-color:green'>
+                    I am here
+                </div>
             </div>
-        </div>
+        </template>
     </div>
+    <script>
+        (function attachShadowRoots(root) {
+        root.querySelectorAll("template[shadowroot]").forEach(template => {
+            const mode = template.getAttribute("shadowroot");
+            const shadowRoot = template.parentNode.attachShadow({ mode });
+            shadowRoot.appendChild(template.content);
+            template.remove();
+            attachShadowRoots(shadowRoot);
+        });
+        })(document);
+    </script>
 </body>
 </html>

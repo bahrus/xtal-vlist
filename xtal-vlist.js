@@ -97,7 +97,7 @@ const ce = new CE({
                 "props": ".",
                 "propMap": {".": "rowTemplate"}
             }'></slot>
-            <div class=scroller part=scroller>
+            <div class=scroller style="overflow-y:scroll" part=scroller>
                 <div class=container part=container></div>
             </div>
             </div>
@@ -108,7 +108,9 @@ const ce = new CE({
     .scroller{
         display:flex;
         flex-direction:column;
-        overflow:auto;
+        overflow-y:scroll;
+        overflow-x:auto;
+        max-height:inherit;
         height:inherit;
         width:inherit;
     }
