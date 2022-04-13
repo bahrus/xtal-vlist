@@ -1,8 +1,11 @@
+# xtal-vlist
+
 <a href="https://nodei.co/npm/xtal-vlist/"><img src="https://nodei.co/npm/xtal-vlist.png"></a>
 
 <img src="https://badgen.net/bundlephobia/minzip/xtal-vlist">
 
-# xtal-vlist
+[![Actions Status](https://github.com/bahrus/xtal-vlist/workflows/CI/badge.svg)](https://github.com/bahrus/xtal-vlist/actions?query=workflow%3ACI)
+
 
 xtal-vlist provides a declarative "infinite scrolling" virtual list web component.
 
