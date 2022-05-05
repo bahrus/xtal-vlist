@@ -2,7 +2,7 @@ import {XtalVlistActions, XtalVlistProps} from './types';
 import {CE} from 'trans-render/lib/CE.js';
 import {TemplMgmt, beTransformed, TemplMgmtProps} from 'trans-render/lib/mixins/TemplMgmt.js';
 import('be-deslotted/be-deslotted.js');
-import('be-intersectional/be-intersectional.js');
+import('be-lazy/be-lazy.js');
 import('be-repeated/be-repeated.js');
 
 export class XtalVList extends HTMLElement implements XtalVlistActions{
@@ -25,10 +25,10 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
         const minHeight = minItemHeight * pageSize;
         const templHeight = (minItemHeight + 0.1) * pageSize;
         
-        const beIntersectionalAttr = JSON.stringify(rowIntersectionalSettings);
+        const beLazyAttr = JSON.stringify(rowIntersectionalSettings);
         const templS = String.raw`
 <div class=page style="min-height:${minHeight}px;">
-    <template style="height:${templHeight}px" be-intersectional='${beIntersectionalAttr}'>
+    <template style="height:${templHeight}px" be-lazy='${beLazyAttr}'>
         <div class=rowContainer></div>
     </template>
 </div>
@@ -134,12 +134,12 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
         display:flex;
         flex-direction:column;
     }
-     template[be-intersectional], template[is-intersectional]{
+     template[be-lazy], template[is-lazy]{
             display:block;
     }
-    template[be-intersectional].expanded, template[is-intersectional].expanded{
+    /* template[be-lazy].expanded, template[is-lazy].expanded{
             display:none;
-    }    
+    }     */
 
 </style>
             `,
