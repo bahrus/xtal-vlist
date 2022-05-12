@@ -6,7 +6,6 @@ import('be-lazy/be-lazy.js');
 import('be-repeated/be-repeated.js');
 
 export class XtalVList extends HTMLElement implements XtalVlistActions{
-    //#ctsMap = new WeakMap<HTMLElement, DTR>();
     #previousPageNo: number = 0;
     containerParts!: WeakRef<HTMLDivElement>[];
     #pageContainers: {[key: number]: WeakRef<HTMLDivElement>} = {};
@@ -66,21 +65,8 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
             this.#previousPageNo = pages;
         }
 
-        
-        
     }
 
-    // onRowHTML({rowHTML}: this) {
-    //     const rowTemplate = document.createElement('template');
-    //     rowTemplate.innerHTML = rowHTML;
-    //     return {
-    //         rowTemplate
-    //     }
-    // }
-
-    onStyleTemplate({styleTemplate, shadowRoot}: this) {
-        shadowRoot!.appendChild(styleTemplate.content.cloneNode(true));
-    }
 }
 
 export interface XtalVList extends XtalVlistProps{}
@@ -103,10 +89,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
                 exitDelay: 32,
             },
             mainTemplate: String.raw`
-            <slot style=display:none name=style be-deslotted='{
-                "props": ".",
-                "propMap": {".": "styleTemplate"}
-            }'></slot>
+            <slot name=header></slot>
             <slot style=display:none name=row be-deslotted='{
                 "props": ".",
                 "propMap": {".": "rowTemplate"}
@@ -137,9 +120,6 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
      template[be-lazy], template[is-lazy]{
             display:block;
     }
-    /* template[be-lazy].expanded, template[is-lazy].expanded{
-            display:none;
-    }     */
 
 </style>
             `,
@@ -162,8 +142,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
             },
             createVirtualList: {
                 ifAllOf: ['newList', 'rowTemplate']
-            } ,
-            onStyleTemplate: 'styleTemplate',
+            },
         }
     },
     superclass: XtalVList,

@@ -15,9 +15,7 @@ export interface XtalVlistProps{
     list: any[];
     newList: boolean;
     lastScrollPos: number;
-    //rowHTML: string;
-    styleTemplate: HTMLTemplateElement;
-    //rowStyle: Node;
+    //styleTemplate: HTMLTemplateElement;
     rowTemplate: HTMLTemplateElement;
     pageSize: number;
     rowIntersectionalSettings: Partial<BeIntersectionalVirtualProps>;
@@ -30,11 +28,7 @@ export interface XtalVlistActions{
         newList: boolean,
     }
     createVirtualList(self: this): void;
-    // onRow(self: this): {
-    //     rowTemplate: HTMLTemplateElement,
-    // }
-    onStyleTemplate(self: this): void;
-    //onScroll(self: this): void;
+
 }
 
 /**
