@@ -1,5 +1,5 @@
 import {TransformPlugins} from 'trans-render/lib/types';
-import {BeIntersectionalVirtualProps} from 'be-intersectional/types';
+import {BeLazyVirtualProps} from 'node_modules/be-lazy/types';
 import {SimpleWCInfo} from 'may-it-be/SimpleWCInfo';
 declare class WeakRef<T>{}
 export interface XtalVlistProps{
@@ -12,13 +12,14 @@ export interface XtalVlistProps{
     containerScrollTop: number,
     rowTransform: any,
     rowTransformPlugins: TransformPlugins,
+    timeStampMap?: {[key: string]: string},
     list: any[];
     newList: boolean;
     lastScrollPos: number;
     //styleTemplate: HTMLTemplateElement;
     rowTemplate: HTMLTemplateElement;
     pageSize: number;
-    rowIntersectionalSettings: Partial<BeIntersectionalVirtualProps>;
+    rowIntersectionalSettings: Partial<BeLazyVirtualProps>;
 }
 
 export interface XtalVlistActions{

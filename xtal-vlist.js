@@ -13,7 +13,7 @@ export class XtalVList extends HTMLElement {
             newList: true,
         };
     }
-    createVirtualList({ totalRows, rowTemplate, rowTransform, pageSize, rowIntersectionalSettings, minItemHeight }) {
+    createVirtualList({ totalRows, rowTemplate, rowTransform, pageSize, timeStampMap, rowIntersectionalSettings, minItemHeight }) {
         const pages = Math.ceil(totalRows / pageSize);
         const minHeight = minItemHeight * pageSize;
         const templHeight = (minItemHeight + 0.1) * pageSize;
@@ -40,6 +40,7 @@ export class XtalVList extends HTMLElement {
                     lBound,
                     uBound,
                     transform: rowTransform,
+                    timeStampMap,
                 };
                 const rowTemplateClone = rowTemplate.cloneNode(true);
                 rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));

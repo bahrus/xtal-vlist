@@ -17,7 +17,7 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
     }
     createVirtualList({
             totalRows, rowTemplate,
-            rowTransform, pageSize,
+            rowTransform, pageSize, timeStampMap,
             rowIntersectionalSettings, minItemHeight
     }: this): void {
         const pages = Math.ceil(totalRows / pageSize);
@@ -47,6 +47,7 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
                     lBound,
                     uBound,
                     transform: rowTransform,
+                    timeStampMap,
                 }
                 const rowTemplateClone = rowTemplate.cloneNode(true) as HTMLElement;
                 rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
