@@ -89,6 +89,7 @@ const ce = new CE<XtalVlistProps & TemplMgmtProps, XtalVlistActions>({
                 enterDelay: 16,
                 exitDelay: 32,
             },
+            timeStampMap: {},
             mainTemplate: String.raw`
             <slot name=header></slot>
             <slot style=display:none name=row be-deslotted='{
