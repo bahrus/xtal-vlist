@@ -21,11 +21,11 @@
     "build-manifest": "node doc.mjs > custom-elements.json"
   },
   "dependencies": {
-    "trans-render": "0.0.540",
+    "trans-render": "0.0.545",
     "xtal-element": "0.0.493",
     "be-deslotted": "0.0.30",
     "be-lazy": "0.0.10",
-    "be-repeated": "0.0.74"
+    "be-repeated": "0.0.76"
   },
   "devDependencies": {
     "@playwright/test": "1.24.2",

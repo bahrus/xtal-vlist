@@ -12,7 +12,7 @@ export interface XtalVlistProps{
     containerScrollTop: number,
     rowTransform: any,
     rowTransformPlugins: TransformPlugins,
-    timeStampMap?: {[key: string]: string},
+    timestampKey?: string,
     list: any[];
     newList: boolean;
     lastScrollPos: number;
