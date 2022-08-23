@@ -34,7 +34,7 @@ export class XtalVList extends HTMLElement {
                 this.#pageContainers[i] = new WeakRef(pageContainer.firstElementChild);
                 const bodyDiv = pageContainer.querySelector('template').content.querySelector('.rowContainer');
                 const lBound = i * pageSize;
-                const uBound = lBound + pageSize;
+                const uBound = lBound + pageSize - 1;
                 const beRepeatedArgs = {
                     list: '.list',
                     lBound,
