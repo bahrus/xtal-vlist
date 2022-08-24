@@ -24,7 +24,7 @@
     "trans-render": "0.0.574",
     "xtal-element": "0.0.513",
     "be-deslotted": "0.0.34",
-    "be-lazy": "0.0.14",
+    "be-lazy": "0.0.16",
     "be-repeated": "0.0.80"
   },
   "devDependencies": {
