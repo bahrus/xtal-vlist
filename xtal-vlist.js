@@ -51,7 +51,7 @@ export class XtalVList extends HTMLElement {
             const container = this.containerParts[0].deref();
             container.appendChild(fragment);
         }
-        else {
+        else if (pages < this.#previousPageNo) {
             for (let i = pages; i < this.#previousPageNo; i++) {
                 const pageContainer = this.#pageContainers[i].deref();
                 if (pageContainer !== undefined)
