@@ -21,20 +21,21 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
             rowIntersectionalSettings, minItemHeight
     }: this): void {
         const pages = Math.ceil(totalRows / pageSize);
-        const minHeight = minItemHeight * pageSize;
-        const templHeight = (minItemHeight + 0.1) * pageSize;
-        
-        const beLazyAttr = JSON.stringify(rowIntersectionalSettings);
-        const templS = String.raw`
-<div class=page style="min-height:${minHeight}px;">
-    <template style="height:${templHeight}px" be-lazy='${beLazyAttr}'>
-        <div class=rowContainer></div>
-    </template>
-</div>
-        `;
-        const pageTempl = document.createElement('template');
-        pageTempl.innerHTML = templS;
+
         if(pages > this.#previousPageNo){
+            const minHeight = minItemHeight * pageSize;
+            const templHeight = (minItemHeight + 0.1) * pageSize;
+            
+            const beLazyAttr = JSON.stringify(rowIntersectionalSettings);
+            const templS = String.raw`
+    <div class=page style="min-height:${minHeight}px;">
+        <template style="height:${templHeight}px" be-lazy='${beLazyAttr}'>
+            <div class=rowContainer></div>
+        </template>
+    </div>
+            `;
+            const pageTempl = document.createElement('template');
+            pageTempl.innerHTML = templS;
             const fragment = document.createDocumentFragment();
             for(let i = this.#previousPageNo; i < pages; i++){
                 const pageContainer = pageTempl.content.cloneNode(true) as HTMLDivElement;
