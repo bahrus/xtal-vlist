@@ -24,9 +24,9 @@
     "trans-render": "0.0.581",
     "xtal-element": "0.0.515",
     "be-deslotted": "0.0.36",
-    "be-lazy": "0.0.17",
+    "be-lazy": "0.0.19",
     "be-oosoom": "0.0.1",
-    "be-repeated": "0.0.84"
+    "be-repeated": "0.0.91"
   },
   "devDependencies": {
     "@playwright/test": "1.25.1",
