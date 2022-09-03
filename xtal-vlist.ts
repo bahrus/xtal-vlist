@@ -53,7 +53,7 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
                 }
                 const rowTemplateClone = rowTemplate.cloneNode(true) as HTMLElement;
                 const beOosoomArgs = {
-                    rootClosest: ".page"
+                    observeClosest: ".page"
                 };
                 rowTemplateClone.setAttribute('be-oosoom', JSON.stringify(beOosoomArgs));
                 rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));

@@ -45,7 +45,7 @@ export class XtalVList extends HTMLElement {
                 };
                 const rowTemplateClone = rowTemplate.cloneNode(true);
                 const beOosoomArgs = {
-                    rootClosest: ".page"
+                    observeClosest: ".page"
                 };
                 rowTemplateClone.setAttribute('be-oosoom', JSON.stringify(beOosoomArgs));
                 rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
