@@ -44,7 +44,10 @@ export class XtalVList extends HTMLElement {
                     timestampKey,
                 };
                 const rowTemplateClone = rowTemplate.cloneNode(true);
-                rowTemplateClone.setAttribute('be-oosoom', '');
+                const beOosoomArgs = {
+                    rootClosest: ".page"
+                };
+                rowTemplateClone.setAttribute('be-oosoom', JSON.stringify(beOosoomArgs));
                 rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
                 bodyDiv.appendChild(rowTemplateClone);
                 fragment.appendChild(pageContainer);
