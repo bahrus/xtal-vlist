@@ -2,6 +2,7 @@ import { CE } from 'trans-render/lib/CE.js';
 import { TemplMgmt, beTransformed } from 'trans-render/lib/mixins/TemplMgmt.js';
 import('be-deslotted/be-deslotted.js');
 import('be-lazy/be-lazy.js');
+import('be-oosoom/be-oosoom.js');
 import('be-repeated/be-repeated.js');
 export class XtalVList extends HTMLElement {
     #previousPageNo = 0;
@@ -43,6 +44,7 @@ export class XtalVList extends HTMLElement {
                     timestampKey,
                 };
                 const rowTemplateClone = rowTemplate.cloneNode(true);
+                rowTemplateClone.setAttribute('be-oosoom', '');
                 rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
                 bodyDiv.appendChild(rowTemplateClone);
                 fragment.appendChild(pageContainer);
