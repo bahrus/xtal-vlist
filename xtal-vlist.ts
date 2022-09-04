@@ -58,6 +58,10 @@ export class XtalVList extends HTMLElement implements XtalVlistActions{
                 rowTemplateClone.setAttribute('be-oosoom', JSON.stringify(beOosoomArgs));
                 rowTemplateClone.setAttribute('be-repeated', JSON.stringify(beRepeatedArgs));
                 bodyDiv.appendChild(rowTemplateClone);
+                if(i === pages - 1){
+                    const div = pageContainer.querySelector('.page') as HTMLDivElement;
+                    div.style.minHeight = minItemHeight + 'px';
+                }
                 fragment.appendChild(pageContainer);
                 this.#previousPageNo = i + 1;
             }
