@@ -21,11 +21,11 @@
     "build-manifest": "node doc.mjs > custom-elements.json"
   },
   "dependencies": {
-    "trans-render": "0.0.581",
-    "xtal-element": "0.0.515",
-    "be-deslotted": "0.0.36",
-    "be-lazy": "0.0.19",
-    "be-oosoom": "0.0.3",
+    "trans-render": "0.0.583",
+    "xtal-element": "0.0.516",
+    "be-deslotted": "0.0.37",
+    "be-lazy": "0.0.20",
+    "be-oosoom": "0.0.4",
     "be-repeated": "0.0.93"
   },
   "devDependencies": {
