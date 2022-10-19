@@ -21,20 +21,19 @@
     "build-manifest": "node doc.mjs > custom-elements.json"
   },
   "dependencies": {
-    "trans-render": "0.0.626",
-    "xtal-element": "0.0.530",
-    "be-deslotted": "0.0.40",
-    "be-lazy": "0.0.22",
-    "be-oosoom": "0.0.8",
-    "be-repeated": "0.0.96"
+    "trans-render": "0.0.628",
+    "xtal-element": "0.0.531",
+    "be-deslotted": "0.0.41",
+    "be-lazy": "0.0.25",
+    "be-oosoom": "0.0.9",
+    "be-repeated": "0.0.97"
   },
   "devDependencies": {
     "@playwright/test": "1.27.1",
     "may-it-serve": "0.0.3",
     "@skypack/package-check": "0.2.2",
-    "xtal-editor": "0.0.196",
     "xtal-shell": "0.0.27",
-    "may-it-be": "0.0.169",
+    "may-it-be": "0.0.170",
     "npm-watch": "0.11.0"
   },
   "exports": {
