@@ -1,5 +1,11 @@
 # xtal-vlist
 
+Current Status
+
+The current functionality of xtal-vlist is being transplanted over to laissez-list, as that is a better description of what it does currently.
+
+Another attempt may be made in the future to restore true virtual list functionality to xtal-vlist.
+
 <a href="https://nodei.co/npm/xtal-vlist/"><img src="https://nodei.co/npm/xtal-vlist.png"></a>
 
 <img src="https://badgen.net/bundlephobia/minzip/xtal-vlist">
